@@ -2,100 +2,1184 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Option Trading Strategies</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
+    <title>Nike, Inc. (NKE) Analysis</title>
     <style>
-        body {
+        :root {
+            --primary-color: #004c98; /* Nike Blue */
+            --primary-dark: #003366;
+            --primary-light: #1a75d2;
+            --secondary-color: #222222;
+            --accent-color: #303030;
+            --buy-color: #34A853; /* Green */
+            --sell-color: #EA4335; /* Red */
+            --hold-color: #FBBC05; /* Yellow */
+            --oversold-color: #2979FF;
+            --text-color: #303030;
+            --text-light: #505050;
+            --text-lighter: #707070;
+            --border-color: #e8e8e8;
+            --background-color: #f8f8f8;
+            --card-background: #ffffff;
+            --card-highlight: #fafafa;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --border-radius-sm: 6px;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            --card-shadow-hover: 0 14px 30px rgba(0,0,0,0.1);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-light: 300;
+            --font-regular: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: var(--spacing-md);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         .container {
-            max-width: 800px;
-            padding: 1em; /* Remove all padding */
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        /* Margin for web only */
-        @media (min-width: 769px) {
-            .container {
-                margin: 50px auto;
-            }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-md);
+            font-weight: var(--font-semibold);
+            line-height: 1.3;
         }
-        /* Ensure no margin on mobile and adjust font size */
-        @media (max-width: 768px) {
-            .container {
-                margin: 0 auto;
-                padding: 0; /* Ensure no padding on mobile as well */
-            }
-            .markdown-body h1 {
-                font-size: 1.6em !important;
-                line-height: 1.2 !important;
-                margin-bottom: 0.5em !important;
-            }
-            .markdown-body {
-                padding: 5px;
-            }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+            display: inline-block;
+            letter-spacing: -0.5px;
         }
-        .markdown-body h1:first-of-type {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-            font-size: 2.2em;
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            padding-left: var(--spacing-md);
+            letter-spacing: -0.5px;
         }
-        .markdown-body h1,
-        .markdown-body h2,
-        .markdown-body h3,
-        .markdown-body h4,
-        .markdown-body h5,
-        .markdown-body h6 {
-            margin-top: 1.2em !important;
-            margin-bottom: 0.5em !important;
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
-        .markdown-body p {
-            margin-bottom: 1em !important;
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: var(--spacing-lg);
+            color: var(--secondary-color);
+            letter-spacing: -0.3px;
         }
-        .markdown-body ul,
-        .markdown-body ol {
-            margin-bottom: 1em !important;
-            padding-left: 20px;
+
+        p {
+            margin-bottom: var(--spacing-md);
+            color: var(--text-color);
         }
-        .markdown-body pre {
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            margin-bottom: 1.5em !important;
+
+        ul, ol {
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-lg);
         }
-        .markdown-body hr {
-            margin: 2em 0 !important;
-            border: none;
-            border-top: 1px solid #ddd;
+
+        li {
+            margin-bottom: var(--spacing-sm);
         }
-        .gist-meta {
-            margin-top: 20px !important;
-            border-top: 1px solid #e1e4e8;
-            padding-top: 10px;
+
+        strong {
+            font-weight: var(--font-semibold);
+            color: var(--accent-color);
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, transparent 50%, rgba(0, 76, 152, 0.1) 50%);
+            border-radius: 0 var(--border-radius-sm) 0 0;
+            z-index: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-header-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin-right: var(--spacing-sm);
+        }
+
+        .card-header-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .card-header-text {
+            font-weight: var(--font-semibold);
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .company-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: var(--spacing-md);
+        }
+
+        .company-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-ticker {
+            font-size: 1rem;
+            font-weight: var(--font-medium);
+            color: var(--primary-color);
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: var(--font-medium);
+            color: var(--text-lighter);
+            background-color: var(--card-background);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .date-display svg {
+            margin-right: var(--spacing-xs);
+        }
+
+        /* Key metrics styling */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .metric-card {
+            background-color: var(--card-highlight);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            background-color: var(--card-background);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            font-weight: var(--font-medium);
+            color: var(--text-lighter);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: var(--font-semibold);
+            color: var(--secondary-color);
+        }
+
+        .metric-trend {
+            font-size: 0.8rem;
+            margin-top: var(--spacing-xs);
+        }
+
+        .trend-up {
+            color: var(--buy-color);
+        }
+
+        .trend-down {
+            color: var(--sell-color);
+        }
+
+        /* Technical indicators styling */
+        .indicator-value {
+            font-size: 1.8rem;
+            font-weight: var(--font-bold);
+            margin-bottom: var(--spacing-sm);
+            color: var(--secondary-color);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .indicator-value-unit {
+            font-size: 1rem;
+            font-weight: var(--font-regular);
+            color: var(--text-lighter);
+            margin-left: var(--spacing-xs);
+        }
+
+        .indicator-label {
+            font-size: 0.9rem;
+            color: var(--text-lighter);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* RSI Bar */
+        .rsi-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .rsi-bar-container {
+            position: relative;
+            width: 100%;
+            height: 24px;
+            background-color: #EEEEEE;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .rsi-zone-oversold {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            background-color: var(--sell-color);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .rsi-zone-overbought {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            background-color: var(--sell-color);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .rsi-marker {
+            position: absolute;
+            width: 4px;
+            height: 32px;
+            background-color: var(--secondary-color);
+            top: -4px;
+            left: 31.53%; /* RSI value position */
+            z-index: 3;
+        }
+
+        .rsi-marker-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            bottom: -4px;
+            left: 31.53%;
+            transform: translateX(-4px);
+            z-index: 4;
+        }
+
+        .rsi-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-lighter);
+        }
+
+        .rsi-label-highlight {
+            color: var(--sell-color);
+            font-weight: var(--font-medium);
+        }
+
+        /* Moving Averages Table */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+        }
+
+        .data-table th, .data-table td {
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: left;
+        }
+
+        .data-table th {
+            font-weight: var(--font-medium);
+            color: var(--text-lighter);
+            background-color: var(--card-highlight);
+            font-size: 0.85rem;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: var(--card-highlight);
+        }
+
+        .data-table td {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .trend-value {
+            display: flex;
+            align-items: center;
+        }
+
+        .trend-value svg {
+            margin-right: var(--spacing-xs);
+            flex-shrink: 0;
+        }
+
+        .down-value {
+            color: var(--sell-color);
+            font-weight: var(--font-semibold);
+        }
+
+        .up-value {
+            color: var(--buy-color);
+            font-weight: var(--font-semibold);
+        }
+
+        /* SWOT Grid Styling */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: var(--spacing-md);
+        }
+
+        .swot-card {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--spacing-xl);
+        }
+
+        .swot-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+        }
+
+        .swot-card.strengths::before {
+            background-color: var(--buy-color);
+        }
+
+        .swot-card.weaknesses::before {
+            background-color: var(--sell-color);
+        }
+
+        .swot-card.opportunities::before {
+            background-color: var(--oversold-color);
+        }
+
+        .swot-card.threats::before {
+            background-color: var(--hold-color);
+        }
+
+        .swot-header {
+            font-weight: var(--font-semibold);
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .swot-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: var(--spacing-sm);
+        }
+
+        .swot-list {
+            padding-left: 1.5rem;
+        }
+
+        .swot-list li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .swot-list li strong {
+            color: var(--accent-color);
+        }
+
+        /* Recommendation Styling */
+        .recommendation-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 28px;
+            background-color: var(--hold-color);
+            color: white;
+            border-radius: 24px;
+            font-weight: var(--font-semibold);
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .recommendation-badge::before {
+            content: "⟳";
+            margin-right: var(--spacing-sm);
+            font-weight: bold;
+        }
+
+        .recommendation-section {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+
+        .recommendation-points {
+            margin-top: var(--spacing-md);
+        }
+
+        .reasons-card {
+            box-shadow: none;
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            background-color: var(--card-highlight);
+        }
+
+        .reasons-title {
+            font-size: 1rem;
+            font-weight: var(--font-medium);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+        }
+
+        .reasons-title svg {
+            margin-right: var(--spacing-xs);
+        }
+
+        .reasons-list {
+            padding-left: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .reasons-list li {
+            margin-bottom: var(--spacing-xs);
+            font-size: 0.95rem;
+        }
+
+        /* Risk Assessment Cards */
+        .risk-card {
+            height: 100%;
+            transition: var(--transition);
+            padding: var(--spacing-md);
+        }
+
+        .risk-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .risk-title {
+            font-weight: var(--font-semibold);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .risk-title svg {
+            margin-right: var(--spacing-xs);
+        }
+
+        .risk-level {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: var(--font-medium);
+        }
+
+        .risk-low {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: #34A853;
+        }
+
+        .risk-medium {
+            background-color: rgba(251, 188, 5, 0.1);
+            color: #E37400;
+        }
+
+        .risk-high {
+            background-color: rgba(234, 67, 53, 0.1);
+            color: #EA4335;
+        }
+
+        /* Bollinger Bands */
+        .bollinger-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .bollinger-bands {
+            position: relative;
+            height: 120px;
+            background-color: var(--card-highlight);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            overflow: hidden;
+        }
+
+        .footer {
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
             text-align: center;
-            color: #586069;
-            font-size: 14px;
+            color: var(--text-lighter);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .gist-meta a {
-            color: #0366d6;
-            text-decoration: none;
+
+        .footer-left {
+            font-size: 0.85rem;
         }
-        .gist-meta a:hover {
-            text-decoration: underline;
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo {
+            width: 18px;
+            height: 18px;
+            margin-right: var(--spacing-xs);
+        }
+
+        /* Content sections */
+        .content-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .content-section h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: var(--spacing-sm);
+            color: var(--secondary-color);
+            font-weight: var(--font-semibold);
+        }
+        
+        .source-citation {
+            display: flex;
+            align-items: center;
+            margin-top: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background-color: rgba(0, 76, 152, 0.05);
+            border-left: 3px solid var(--primary-color);
+            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+        }
+        
+        .source-icon {
+            color: var(--primary-color);
+            margin-right: var(--spacing-xs);
+            flex-shrink: 0;
+        }
+        
+        .source-text {
+            font-size: 0.85rem;
+            color: var(--text-lighter);
+            font-style: italic;
+        }
+
+        @media (max-width: 1000px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4, .swot-grid, .recommendation-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .recommendation-badge {
+                margin: 0 auto var(--spacing-md);
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container markdown-body">
-    <!-- Embed your Gist using the script tag -->
-    <script src="https://gist.github.com/justinjohnson-dev/246b267405f679e46d7695afab23eaf5.js"></script>
-</div>
+    <div class="container">
+        <div class="header-section">
+            <div class="company-logo">
+                <img class="logo" src="/api/placeholder/50/50" alt="NKE Logo">
+                <div class="company-info">
+                    <div class="company-ticker">NYSE: NKE</div>
+                    <h1>Nike, Inc. Analysis</h1>
+                </div>
+            </div>
+            <div class="date-display">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#606060" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 13C11.45 13 11 13.45 11 14C11 14.55 11.45 15 12 15C12.55 15 13 14.55 13 14C13 13.45 12.55 13 12 13Z" fill="#606060"/>
+                </svg>
+                April 10, 2025
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 10.5H14V14.5H10V10.5ZM10 5.5H14V9.5H10V5.5ZM5 15.5H9V19.5H5V15.5ZM5 10.5H9V14.5H5V10.5ZM5 5.5H9V9.5H5V5.5ZM15 15.5H19V19.5H15V15.5ZM15 10.5H19V14.5H15V10.5ZM15 5.5H19V9.5H15V5.5Z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="card-header-text">Key Metrics Dashboard</div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Current Price</div>
+                    <div class="metric-value">$54.40</div>
+                    <div class="metric-trend trend-down">-8.80% (1d)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Trading Volume</div>
+                    <div class="metric-value">High</div>
+                    <div class="metric-trend">Above average activity</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Market Cap</div>
+                    <div class="metric-value">$80.29B</div>
+                    <div class="metric-trend">Based on outstanding shares</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Day Range</div>
+                    <div class="metric-value">$52.28 - $59.12</div>
+                    <div class="metric-trend">High volatility</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">RSI (14-day)</div>
+                    <div class="metric-value">31.53</div>
+                    <div class="metric-trend">Approaching oversold</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">50-Day SMA</div>
+                    <div class="metric-value">$71.41</div>
+                    <div class="metric-trend trend-down">-23.82% from average</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Company Overview</h2>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 6.5H16M6 6.5H2M2 12H8M16 12H22M12 17.5H22M12 17.5C12 19.1569 10.6569 20.5 9 20.5C7.34315 20.5 6 19.1569 6 17.5C6 15.8431 7.34315 14.5 9 14.5C10.6569 14.5 12 15.8431 12 17.5ZM6 6.5C6 8.15685 7.34315 9.5 9 9.5C10.6569 9.5 12 8.15685 12 6.5C12 4.84315 10.6569 3.5 9 3.5C7.34315 3.5 6 4.84315 6 6.5ZM18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9C16.6569 9 18 10.3431 18 12Z" stroke="white" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="card-header-text">Business Profile</div>
+            </div>
+            <p>Nike, Inc. is the world's largest athletic footwear and apparel brand, with key categories including basketball, running, and football (soccer). The company maintains a dominant global presence in the sportswear market through its iconic brands that include Nike, Jordan, and Converse.</p>
+            <p>Footwear generates approximately <strong>two-thirds of Nike's sales</strong>, with the remaining revenue coming from apparel and equipment. The company has a <strong>robust global distribution network</strong> spanning over 40 countries through company-owned stores, franchised locations, third-party retailers, and e-commerce platforms.</p>
+            <p>Nike's business model relies heavily on outsourcing production, with <strong>nearly all manufacturing handled by contract manufacturers</strong> in more than 30 countries. This approach has historically allowed Nike to maintain flexibility and focus on its core competencies of design, marketing, and distribution, though recent tariff issues are challenging this model.</p>
+        </div>
+        
+        <h2>Technical Analysis</h2>
+        <div class="grid grid-2">
+            <!-- First Card: RSI & Moving Averages -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7.33008 14.49L9.71008 11.4C10.0501 10.96 10.6801 10.88 11.1201 11.22L12.9501 12.66C13.3901 13 14.0201 12.92 14.3601 12.49L16.6701 9.51001" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="card-header-text">Technical Indicators</div>
+                </div>
+                <h3>RSI Analysis</h3>
+                <p>The Relative Strength Index (RSI) is currently at <strong>31.53</strong>, approaching oversold territory. This suggests the stock may be nearing a potential bounce point, though continued selling pressure could push it further into oversold conditions.</p>
+                
+                <div class="rsi-container">
+                    <div class="rsi-bar-container">
+                        <div class="rsi-zone-oversold"></div>
+                        <div class="rsi-zone-overbought"></div>
+                        <div class="rsi-marker"></div>
+                        <div class="rsi-marker-dot"></div>
+                    </div>
+                    <div class="rsi-labels">
+                        <span class="rsi-label-highlight">Oversold (30)</span>
+                        <span>Neutral (50)</span>
+                        <span class="rsi-label-highlight">Overbought (70)</span>
+                    </div>
+                </div>
+                
+                <h3>Moving Averages</h3>
+                <p>NKE stock is trading significantly below key moving averages, signaling a strong bearish trend despite potential for short-term relief.</p>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Value</th>
+                            <th>Distance from Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>50-Day SMA</td>
+                            <td>$71.41</td>
+                            <td class="trend-value down-value">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                -23.82%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>200-Day SMA</td>
+                            <td>$76.32</td>
+                            <td class="trend-value down-value">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                -28.72%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9C4.10457 9 5 8.10457 5 7C5 5.89543 4.10457 5 3 5C1.89543 5 1 5.89543 1 7C1 8.10457 1.89543 9 3 9Z" stroke="white" stroke-width="1.5"/>
+                            <path d="M21 17C22.1046 17 23 16.1046 23 15C23 13.8954 22.1046 13 21 13C19.8954 13 19 13.8954 19 15C19 16.1046 19.8954 17 21 17Z" stroke="white" stroke-width="1.5"/>
+                            <path d="M12 22C13.1046 22 14 21.1046 14 20C14 18.8954 13.1046 18 12 18C10.8954 18 10 18.8954 10 20C10 21.1046 10.8954 22 12 22Z" stroke="white" stroke-width="1.5"/>
+                            <path d="M5 7H19M19 15H21M3 7H1M12 20H10M12 20V18M12 18H14" stroke="white" stroke-width="1.5"/>
+                            <path d="M19 13V7M5 7V15C5 16.1046 5.89543 17 7 17H19" stroke="white" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="card-header-text">Advanced Technical Indicators</div>
+                </div>
+                
+                <div class="indicator-value">
+                    <span class="indicator-status neutral" style="font-size: 1.4rem; font-weight: var(--font-semibold); padding: 4px 12px; background-color: rgba(234, 67, 53, 0.1); color: var(--sell-color); border-radius: 20px;">Below Lower Band</span>
+                </div>
+                <div class="indicator-label">Bollinger Bands (20-day, 2σ)</div>
+                
+                <div class="bollinger-container" style="margin: var(--spacing-md) 0;">
+                    <div class="bollinger-bands" style="position: relative; height: 120px; background-color: var(--card-highlight); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); margin-bottom: var(--spacing-md); overflow: hidden;">
+                        <!-- Gradient Background -->
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%); z-index: 1;"></div>
+                        
+                        <!-- Bollinger Upper Band -->
+                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
+                            <path d="M0,20 C50,15 100,12 150,10 C200,8 250,10 300,12" 
+                                  stroke="var(--text-lighter)" 
+                                  stroke-width="1.5" 
+                                  fill="none" />
+                        </svg>
+                        
+                        <!-- Bollinger Middle Band (SMA) -->
+                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 3;">
+                            <path d="M0,50 C50,48 100,45 150,48 C200,51 250,53 300,50" 
+                                  stroke="var(--primary-color)" 
+                                  stroke-width="2" 
+                                  fill="none" />
+                        </svg>
+                        
+                        <!-- Bollinger Lower Band -->
+                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
+                            <path d="M0,80 C50,78 100,75 150,78 C200,81 250,83 300,80" 
+                                  stroke="var(--text-lighter)" 
+                                  stroke-width="1.5" 
+                                  fill="none" />
+                        </svg>
+                        
+                        <!-- Price Line -->
+                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 5;">
+                            <path d="M0,85 C30,82 60,75 90,78 C120,80 150,90 180,95 C210,98 240,96 270,95 C285,92 300,90" 
+                                  stroke="var(--sell-color)" 
+                                  stroke-width="2.5" 
+                                  fill="none" />
+                            <!-- Current Price Marker -->
+                            <circle cx="300" cy="90" r="5" fill="var(--sell-color)" />
+                        </svg>
+                        
+                        <!-- Bands Fill -->
+                        <div style="position: absolute; top: 10px; left: 0; width: 100%; height: 70px; background-color: rgba(0, 76, 152, 0.05); z-index: 1; border-radius: 4px;"></div>
+                        
+                        <!-- Labels -->
+                        <div style="position: absolute; top: 10px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">Upper Band ($unknown)</div>
+                        <div style="position: absolute; top: 48px; left: 8px; font-size: 0.7rem; color: var(--primary-color); font-weight: var(--font-medium); z-index: 6;">SMA ($unknown)</div>
+                        <div style="position: absolute; top: 78px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">Lower Band ($51.17)</div>
+                        <div style="position: absolute; bottom: 5px; right: 12px; font-size: 0.8rem; color: var(--sell-color); font-weight: var(--font-semibold); z-index: 6;">$54.40</div>
+                    </div>
+                    
+                    <!-- Bollinger Values -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm);">
+                        <div style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Upper</span>
+                            <span style="font-size: 1rem; font-weight: var(--font-medium);">Unknown</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 76, 152, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Middle</span>
+                            <span style="font-size: 1rem; font-weight: var(--font-medium);">Unknown</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Lower</span>
+                            <span style="font-size: 1rem; font-weight: var(--font-medium);">$51.17</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; background-color: rgba(234, 67, 53, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Current</span>
+                            <span style="font-size: 1rem; font-weight: var(--font-semibold); color: var(--sell-color);">$54.40</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>The current price ($54.40) is trading below the lower Bollinger Band ($51.17), suggesting the stock is in oversold territory and may be due for a rebound.</p>
+                <p>MACD at -4.91 with a signal line at -4.05 (histogram -0.85) confirms the bearish momentum despite potential oversold conditions.</p>
+            </div>
+        </div>
+        
+        <h2>SWOT Analysis</h2>
+        <div class="swot-grid">
+            <div class="card swot-card strengths">
+                <div class="swot-header">
+                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="#34A853"/>
+                    </svg>
+                    <span>Strengths</span>
+                </div>
+                <ul class="swot-list">
+                    <li><strong>Powerful global brand</strong> with strong recognition and loyalty</li>
+                    <li><strong>Diverse geographical revenue</strong> streams across 40+ countries</li>
+                    <li><strong>Consistent dividend growth</strong> history attractive to income investors</li>
+                    <li><strong>Strong financial position</strong> with substantial marketing resources</li>
+                    <li><strong>New management team</strong> focused on addressing fundamental issues</li>
+                </ul>
+            </div>
+            
+            <div class="card swot-card weaknesses">
+                <div class="swot-header">
+                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 16.75H8C7.59 16.75 7.25 16.41 7.25 16C7.25 15.59 7.59 15.25 8 15.25H16C16.41 15.25 16.75 15.59 16.75 16C16.75 16.41 16.41 16.75 16 16.75Z" fill="#EA4335"/>
+                    </svg>
+                    <span>Weaknesses</span>
+                </div>
+                <ul class="swot-list">
+                    <li><strong>Declining revenue and earnings</strong> in recent quarters</li>
+                    <li><strong>Loss of market share</strong> to competitors like Adidas, Puma, On Holding</li>
+                    <li><strong>Direct-to-consumer strategy</strong> execution issues</li>
+                    <li><strong>Inventory management challenges</strong> affecting margins</li>
+                    <li><strong>Supply chain vulnerability</strong> with 50% of footwear from Vietnam</li>
+                </ul>
+            </div>
+            
+            <div class="card swot-card opportunities">
+                <div class="swot-header">
+                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 12H16" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V8" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Opportunities</span>
+                </div>
+                <ul class="swot-list">
+                    <li><strong>New strategic focus</strong> on product innovation could reignite growth</li>
+                    <li><strong>Strengthening relationships</strong> with wholesale partners like Foot Locker</li>
+                    <li><strong>Strategic partnerships</strong> like the Skims collaboration to reach new consumers</li>
+                    <li><strong>Potential tariff relief</strong> through Vietnam trade negotiations</li>
+                    <li><strong>Value buying opportunity</strong> at current price levels</li>
+                </ul>
+            </div>
+            
+            <div class="card swot-card threats">
+                <div class="swot-header">
+                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FBBC05" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8V13" stroke="#FBBC05" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.9941 16H12.0031" stroke="#FBBC05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Threats</span>
+                </div>
+                <ul class="swot-list">
+                    <li><strong>Significant tariff impact</strong> on Vietnam (50% of footwear production)</li>
+                    <li><strong>Intensifying competition</strong> from Adidas, Puma, On Holding, and Hoka</li>
+                    <li><strong>Changing consumer preferences</strong> away from traditional athletic wear</li>
+                    <li><strong>Economic uncertainty</strong> affecting discretionary spending on footwear</li>
+                    <li><strong>Margin pressure</strong> from increased costs that cannot be fully passed on</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>Investment Recommendation</h2>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9V15M9 15V20.4C9 20.7314 9.26863 21 9.6 21H14.4C14.7314 21 15 20.7314 15 20.4V15M18 9V15M3 9H21M3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9V15V20.4C21 20.7314 20.7314 21 20.4 21H9.6M3 15V20.4C3 20.7314 3.26863 21 3.6 21H9.6M12 9V15M9 6V3.6C9 3.26863 9.26863 3 9.6 3M15 6V3.6C15 3.26863 14.7314 3 14.4 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="card-header-text">Analyst Recommendation</div>
+            </div>
+            
+            <div class="recommendation-section">
+                <div>
+                    <div class="recommendation-badge">HOLD</div>
+                    <div class="content-section">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>Significant tariff headwinds</li>
+                            <li>Approaching oversold conditions</li>
+                            <li>New CEO implementing turnaround</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="recommendation-points">
+                    <p>Based on a comprehensive analysis of Nike's technical indicators, fundamental metrics, recent news, and market positioning, a "Hold" recommendation is appropriate for existing investors, while new investors should wait for more clarity before initiating positions.</p>
+                    
+                    <div class="reasons-card">
+                        <div class="reasons-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#FBBC05" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Fundamental Factors
+                        </div>
+                        <ul class="reasons-list">
+                            <li>Strong brand equity and global presence remain intact</li>
+                            <li>New CEO Elliott Hill implementing focused turnaround strategy</li>
+                            <li>Dividend yield now at 15-year high providing income support</li>
+                            <li>Notable investor Bill Ackman accumulating shares via options</li>
+                            <li>P/E ratio of approximately 19.3x represents relative value</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reasons-card">
+                        <div class="reasons-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 12V17C22 20 20 22 17 22H7C4 22 2 20 2 17V12C2 9.3 3.3 7.8 5.5 7.3C5.8 7.2 6.1 7.1 6.4 7.1C6.9 7.0 7.5 7 8 7H16C16.5 7 17 7 17.5 7.1C17.9 7.1 18.2 7.2 18.4 7.3C20.7 7.8 22 9.3 22 12Z" stroke="#EA4335" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 7H8C7.5 7 6.9 7 6.4 7.1C5.5 2.7 7.6 2 12 2C16.4 2 18.5 3 17.5 7.1C17.1 7 16.5 7 16 7Z" stroke="#EA4335" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Bearish Concerns
+                        </div>
+                        <ul class="reasons-list">
+                            <li>Vietnam (50% of footwear production) severely impacted by new tariffs</li>
+                            <li>Trading significantly below moving averages (50-day: -23.82%, 200-day: -28.72%)</li>
+                            <li>Q4 FY25 earnings expected to decline in mid-teens with margins down 400-500 basis points</li>
+                            <li>Continued market share erosion to competitors like Adidas, Puma, On Holding</li>
+                            <li>Stock dropped 8.8% in a single day (April 10) on tariff concerns</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reasons-card">
+                        <div class="reasons-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 8V13" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.9941 16H12.0031" stroke="#2979FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Technical Factors
+                        </div>
+                        <ul class="reasons-list">
+                            <li>RSI at 31.53 approaching oversold territory below 30</li>
+                            <li>Price ($54.40) near the lower Bollinger Band ($51.17), suggesting potential bounce</li>
+                            <li>MACD at -4.91 with signal at -4.05 confirms bearish momentum</li>
+                            <li>Trading near possible 52-week lows with high volatility</li>
+                        </ul>
+                    </div>
+                    
+                    <p>The primary factor weighing on Nike's stock is the immediate threat of tariffs, particularly on Vietnam, where the company manufactures approximately 50% of its footwear. The recently announced 10% blanket tariff on global imports creates substantial uncertainty around Nike's cost structure and profitability.</p>
+                    
+                    <p>However, several positive factors prevent a Sell recommendation. Nike's core brand strength remains intact, notable investors like Bill Ackman continue to accumulate shares, and the new CEO is implementing a focused turnaround strategy. Additionally, there are emerging catalysts including Vietnam's interest in negotiating tariff reductions, strategic partnerships like the NikeSKIMS collaboration, and a dividend yield at 15-year highs.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Risk Assessment</h2>
+        <div class="grid grid-3">
+            <div class="card risk-card">
+                <div class="risk-header">
+                    <div class="risk-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#EA4335" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" stroke="#EA4335" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18.5 5.5V5.5" stroke="#EA4335" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Tariff Impact
+                    </div>
+                    <div class="risk-level risk-high">High</div>
+                </div>
+                <p>Vietnam (50% of footwear production) and other manufacturing hubs severely impacted by new tariffs. 10% global tariff with potential for higher rates creates significant margin pressure and supply chain disruption.</p>
+            </div>
+            
+            <div class="card risk-card">
+                <div class="risk-header">
+                    <div class="risk-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 11V17C22 21 21 22 17 22H7C3 22 2 21 2 17V7C2 3 3 2 7 2H8.5C10 2 10.33 2.44 10.9 3.2L12.4 5.2C12.78 5.7 13 6 14 6H17C21 6 22 7 22 11Z" stroke="#FBBC05" stroke-width="1.5" stroke-miterlimit="10"/>
+                        </svg>
+                        Revenue Decline
+                    </div>
+                    <div class="risk-level risk-high">High</div>
+                </div>
+                <p>Continuing trend of declining revenue with recent quarters showing weakness. Q4 FY25 earnings expected to decline in mid-teens with gross margins down 400-500 basis points year-over-year.</p>
+            </div>
+            
+            <div class="card risk-card">
+                <div class="risk-header">
+                    <div class="risk-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 8.5C22 12.09 19.09 15 15.5 15C15.33 15 15.15 14.99 14.98 14.98C14.73 11.81 12.19 9.26 9.01998 9.02C9.00998 8.85 8.99999 8.67 8.99999 8.5C8.99999 4.91 11.91 2 15.5 2C19.09 2 22 4.91 22 8.5Z" stroke="#004c98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15 22C11.69 22 9 19.31 9 16C9 12.69 11.69 10 15 10C18.31 10 21 12.69 21 16C21 19.31 18.31 22 15 22Z" stroke="#004c98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Market Share Erosion
+                    </div>
+                    <div class="risk-level risk-medium">Medium</div>
+                </div>
+                <p>Competitors like Adidas, Puma, On Holding, and Hoka are gaining market share at Nike's expense, particularly in key growth segments of the athletic footwear and apparel markets.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-left">
+                Data as of April 10, 2025 | Market Close: $54.40 (-8.80%)
+            </div>
+            <div class="footer-right">
+                <img class="footer-logo" src="/api/placeholder/18/18" alt="NKE Logo">
+                Nike, Inc. Analysis
+            </div>
+        </div>
+    </div>
 </body>
 </html>
