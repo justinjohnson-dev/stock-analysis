@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robinhood Markets, Inc. (HOOD) Analysis</title>
+    <title>Robinhood Markets, Inc. (HOOD) Analysis Dashboard</title>
     <style>
         :root {
-            --primary-color: #00C805; /* Robinhood Green */
-            --primary-dark: #009605;
-            --primary-light: #4DDA4E;
+            --primary-color: #00C805;
+            /* Robinhood green */
+            --primary-dark: #00A604;
+            --primary-light: #39D53A;
             --secondary-color: #222222;
             --accent-color: #303030;
-            --buy-color: #00C805; /* Robinhood Green */
-            --sell-color: #FF5000; /* Robinhood Red/Orange */
-            --hold-color: #FFA500; /* Robinhood Yellow/Orange */
+            --buy-color: #00C805;
+            --sell-color: #FF5000;
+            --hold-color: #F5A623;
             --oversold-color: #2979FF;
             --text-color: #303030;
             --text-light: #505050;
@@ -30,8 +32,8 @@
             --border-radius-sm: 6px;
             --border-radius: 12px;
             --border-radius-lg: 16px;
-            --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            --card-shadow-hover: 0 14px 30px rgba(0,0,0,0.1);
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.1);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --font-light: 300;
             --font-regular: 400;
@@ -61,7 +63,12 @@
             margin: 0 auto;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             color: var(--secondary-color);
             margin-bottom: var(--spacing-md);
             font-weight: var(--font-semibold);
@@ -109,7 +116,8 @@
             color: var(--text-color);
         }
 
-        ul, ol {
+        ul,
+        ol {
             margin-bottom: var(--spacing-md);
             padding-left: var(--spacing-lg);
         }
@@ -217,7 +225,8 @@
         }
 
         .logo {
-            width: 50px; /* Increased width */
+            width: 50px;
+            /* Increased width */
             height: 50px;
             margin-right: var(--spacing-md);
         }
@@ -268,7 +277,7 @@
         .metric-card:hover {
             background-color: var(--card-background);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .metric-label {
@@ -363,7 +372,8 @@
             height: 32px;
             background-color: var(--secondary-color);
             top: -4px;
-            left: 47.58%; /* RSI value position */
+            left: 34.34%;
+            /* RSI value position */
             z-index: 3;
         }
 
@@ -374,7 +384,7 @@
             background-color: var(--secondary-color);
             border-radius: 50%;
             bottom: -4px;
-            left: 47.58%;
+            left: 34.34%;
             transform: translateX(-4px);
             z-index: 4;
         }
@@ -401,7 +411,8 @@
             overflow: hidden;
         }
 
-        .data-table th, .data-table td {
+        .data-table th,
+        .data-table td {
             padding: var(--spacing-sm) var(--spacing-md);
             text-align: left;
         }
@@ -516,7 +527,7 @@
             justify-content: center;
             padding: 10px 28px;
             background-color: var(--hold-color);
-            color: white;
+            color: #333;
             border-radius: 24px;
             font-weight: var(--font-semibold);
             font-size: 1.1rem;
@@ -610,32 +621,17 @@
 
         .risk-low {
             background-color: rgba(0, 200, 5, 0.1);
-            color: #00C805;
+            color: #00813C;
         }
 
         .risk-medium {
-            background-color: rgba(255, 165, 0, 0.1);
-            color: #FFA500;
+            background-color: rgba(245, 166, 35, 0.1);
+            color: #B17800;
         }
 
         .risk-high {
             background-color: rgba(255, 80, 0, 0.1);
-            color: #FF5000;
-        }
-
-        /* Bollinger Bands */
-        .bollinger-container {
-            margin: var(--spacing-md) 0;
-        }
-
-        .bollinger-bands {
-            position: relative;
-            height: 120px;
-            background-color: var(--card-highlight);
-            border-radius: var(--border-radius-sm);
-            padding: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-            overflow: hidden;
+            color: #C62100;
         }
 
         .footer {
@@ -665,11 +661,26 @@
             margin-right: var(--spacing-xs);
         }
 
-        /* Content sections */
+        /* Bollinger Bands Styling */
+        .bollinger-container {
+            margin: var(--spacing-md) 0;
+        }
+
+        .bollinger-bands {
+            position: relative;
+            height: 120px;
+            background-color: var(--card-highlight);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            overflow: hidden;
+        }
+
+        /* Content Section Styling */
         .content-section {
             margin-bottom: var(--spacing-lg);
         }
-        
+
         .content-section h3 {
             font-size: 1.1rem;
             margin-top: 0;
@@ -677,7 +688,7 @@
             color: var(--secondary-color);
             font-weight: var(--font-semibold);
         }
-        
+
         .source-citation {
             display: flex;
             align-items: center;
@@ -687,20 +698,20 @@
             border-left: 3px solid var(--primary-color);
             border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
         }
-        
+
         .source-icon {
             color: var(--primary-color);
             margin-right: var(--spacing-xs);
             flex-shrink: 0;
         }
-        
+
         .source-text {
             font-size: 0.85rem;
             color: var(--text-lighter);
             font-style: italic;
         }
 
-        
+        /* Media Queries */
         @media (max-width: 1000px) {
             .metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -708,22 +719,27 @@
         }
 
         @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4, .swot-grid, .recommendation-section {
+
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .swot-grid,
+            .recommendation-section {
                 grid-template-columns: 1fr;
             }
-            
+
             .metrics-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             h2 {
                 font-size: 1.4rem;
             }
-            
+
             h3 {
                 font-size: 1.2rem;
             }
@@ -735,6 +751,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header-section">
@@ -747,18 +764,24 @@
             </div>
             <div class="date-display">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#606060" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 13C11.45 13 11 13.45 11 14C11 14.55 11.45 15 12 15C12.55 15 13 14.55 13 14C13 13.45 12.55 13 12 13Z" fill="#606060"/>
+                    <path
+                        d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+                        stroke="#606060" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M12 13C11.45 13 11 13.45 11 14C11 14.55 11.45 15 12 15C12.55 15 13 14.55 13 14C13 13.45 12.55 13 12 13Z"
+                        fill="#606060" />
                 </svg>
                 April 10, 2025
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header">
                 <div class="card-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 10.5H14V14.5H10V10.5ZM10 5.5H14V9.5H10V5.5ZM5 15.5H9V19.5H5V15.5ZM5 10.5H9V14.5H5V10.5ZM5 5.5H9V9.5H5V5.5ZM15 15.5H19V19.5H15V15.5ZM15 10.5H19V14.5H15V10.5ZM15 5.5H19V9.5H15V5.5Z" fill="white"/>
+                        <path
+                            d="M10 10.5H14V14.5H10V10.5ZM10 5.5H14V9.5H10V5.5ZM5 15.5H9V19.5H5V15.5ZM5 10.5H9V14.5H5V10.5ZM5 5.5H9V9.5H5V5.5ZM15 15.5H19V19.5H15V15.5ZM15 10.5H19V14.5H15V10.5ZM15 5.5H19V9.5H15V5.5Z"
+                            fill="white" />
                     </svg>
                 </div>
                 <div class="card-header-text">Key Metrics Dashboard</div>
@@ -796,22 +819,34 @@
                 </div>
             </div>
         </div>
-        
+
         <h2>Company Overview</h2>
         <div class="card">
             <div class="card-header">
                 <div class="card-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22 6.5H16M6 6.5H2M2 12H8M16 12H22M12 17.5H22M12 17.5C12 19.1569 10.6569 20.5 9 20.5C7.34315 20.5 6 19.1569 6 17.5C6 15.8431 7.34315 14.5 9 14.5C10.6569 14.5 12 15.8431 12 17.5ZM6 6.5C6 8.15685 7.34315 9.5 9 9.5C10.6569 9.5 12 8.15685 12 6.5C12 4.84315 10.6569 3.5 9 3.5C7.34315 3.5 6 4.84315 6 6.5ZM18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9C16.6569 9 18 10.3431 18 12Z" stroke="white" stroke-width="1.5"/>
+                        <path
+                            d="M22 6.5H16M6 6.5H2M2 12H8M16 12H22M12 17.5H22M12 17.5C12 19.1569 10.6569 20.5 9 20.5C7.34315 20.5 6 19.1569 6 17.5C6 15.8431 7.34315 14.5 9 14.5C10.6569 14.5 12 15.8431 12 17.5ZM6 6.5C6 8.15685 7.34315 9.5 9 9.5C10.6569 9.5 12 8.15685 12 6.5C12 4.84315 10.6569 3.5 9 3.5C7.34315 3.5 6 4.84315 6 6.5ZM18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9C16.6569 9 18 10.3431 18 12Z"
+                            stroke="white" stroke-width="1.5" />
                     </svg>
                 </div>
                 <div class="card-header-text">Business Profile</div>
             </div>
-            <p>Robinhood Markets, Inc. is a modern financial services platform that provides commission-free trading of stocks, ETFs, options, and cryptocurrencies through a mobile app. Founded with the mission to democratize finance, the company designs its own products and delivers them through a single, app-based cloud platform.</p>
-            <p>The company's vertically integrated platform has enabled the introduction of new products including <strong>cryptocurrency trading</strong>, dividend reinvestment, derivatives, fractional shares, and recurring investments. Robinhood has recently expanded into <strong>banking and wealth management services</strong> as well as <strong>prediction markets</strong> with NCAA tournament futures.</p>
-            <p>Robinhood has demonstrated impressive growth with <strong>24.8 million funded customers</strong> and a <strong>106% increase in assets under custody</strong>. The company has achieved <strong>four consecutive quarters of GAAP profitability</strong>, with Q4 2024 showing revenue up over 100% and net income increasing over 10x year-over-year. Their recent $45 million SEC settlement has resolved previous regulatory issues, paving the way for continued expansion.</p>
+            <p>Robinhood Markets, Inc. is a modern financial services platform that provides commission-free trading of
+                stocks, ETFs, options, and cryptocurrencies through a mobile app. Founded with the mission to
+                democratize finance, the company designs its own products and delivers them through a single, app-based
+                cloud platform.</p>
+            <p>The company's vertically integrated platform has enabled the introduction of new products including
+                <strong>cryptocurrency trading</strong>, dividend reinvestment, derivatives, fractional shares, and
+                recurring investments. Robinhood has recently expanded into <strong>banking and wealth management
+                    services</strong> as well as <strong>prediction markets</strong> with NCAA tournament futures.</p>
+            <p>Robinhood has demonstrated impressive growth with <strong>24.8 million funded customers</strong> and a
+                <strong>106% increase in assets under custody</strong>. The company has achieved <strong>four
+                    consecutive quarters of GAAP profitability</strong>, with Q4 2024 showing revenue up over 100% and
+                net income increasing over 10x year-over-year. Their recent $45 million SEC settlement has resolved
+                previous regulatory issues, paving the way for continued expansion.</p>
         </div>
-        
+
         <h2>Technical Analysis</h2>
         <div class="grid grid-2">
             <!-- First Card: RSI & Moving Averages -->
@@ -819,15 +854,20 @@
                 <div class="card-header">
                     <div class="card-header-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7.33008 14.49L9.71008 11.4C10.0501 10.96 10.6801 10.88 11.1201 11.22L12.9501 12.66C13.3901 13 14.0201 12.92 14.3601 12.49L16.6701 9.51001" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M7.33008 14.49L9.71008 11.4C10.0501 10.96 10.6801 10.88 11.1201 11.22L12.9501 12.66C13.3901 13 14.0201 12.92 14.3601 12.49L16.6701 9.51001"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <div class="card-header-text">Technical Indicators</div>
                 </div>
                 <h3>RSI Analysis</h3>
-                <p>The Relative Strength Index (RSI) is currently at <strong>47.58</strong>, indicating the stock is in neutral territory. This suggests the stock is neither overbought nor oversold, though it's slightly below the neutral midpoint of 50.</p>
-                
+                <p>The Relative Strength Index (RSI) is currently at <strong>47.58</strong>, indicating the stock is in
+                    neutral territory. This suggests the stock is neither overbought nor oversold, though it's slightly
+                    below the neutral midpoint of 50.</p>
+
                 <div class="rsi-container">
                     <div class="rsi-bar-container">
                         <div class="rsi-zone-oversold"></div>
@@ -841,10 +881,12 @@
                         <span class="rsi-label-highlight">Overbought (70)</span>
                     </div>
                 </div>
-                
+
                 <h3>Moving Averages</h3>
-                <p>HOOD stock shows mixed signals from its moving averages. While it's trading well below its 50-day moving average (bearish short-term), it remains significantly above its 200-day moving average (bullish long-term).</p>
-                
+                <p>HOOD stock shows mixed signals from its moving averages. While it's trading well below its 50-day
+                    moving average (bearish short-term), it remains significantly above its 200-day moving average
+                    (bullish long-term).</p>
+
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -859,7 +901,8 @@
                             <td>$46.93</td>
                             <td class="trend-value down-value">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#FF5000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#FF5000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 -13.68%
                             </td>
@@ -869,7 +912,8 @@
                             <td>$33.43</td>
                             <td class="trend-value up-value">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                    <path d="M6 14.83L11 9.83L16 14.83" stroke="#00C805" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6 14.83L11 9.83L16 14.83" stroke="#00C805" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 +21.18%
                             </td>
@@ -879,7 +923,8 @@
                             <td>-1.99</td>
                             <td class="trend-value down-value">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#FF5000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17.9999 9.17L12.9999 14.17L7.99985 9.17" stroke="#FF5000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 Bearish crossover
                             </td>
@@ -887,107 +932,136 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
                     <div class="card-header-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9C4.10457 9 5 8.10457 5 7C5 5.89543 4.10457 5 3 5C1.89543 5 1 5.89543 1 7C1 8.10457 1.89543 9 3 9Z" stroke="white" stroke-width="1.5"/>
-                            <path d="M21 17C22.1046 17 23 16.1046 23 15C23 13.8954 22.1046 13 21 13C19.8954 13 19 13.8954 19 15C19 16.1046 19.8954 17 21 17Z" stroke="white" stroke-width="1.5"/>
-                            <path d="M12 22C13.1046 22 14 21.1046 14 20C14 18.8954 13.1046 18 12 18C10.8954 18 10 18.8954 10 20C10 21.1046 10.8954 22 12 22Z" stroke="white" stroke-width="1.5"/>
-                            <path d="M5 7H19M19 15H21M3 7H1M12 20H10M12 20V18M12 18H14" stroke="white" stroke-width="1.5"/>
-                            <path d="M19 13V7M5 7V15C5 16.1046 5.89543 17 7 17H19" stroke="white" stroke-width="1.5"/>
+                            <path
+                                d="M3 9C4.10457 9 5 8.10457 5 7C5 5.89543 4.10457 5 3 5C1.89543 5 1 5.89543 1 7C1 8.10457 1.89543 9 3 9Z"
+                                stroke="white" stroke-width="1.5" />
+                            <path
+                                d="M21 17C22.1046 17 23 16.1046 23 15C23 13.8954 22.1046 13 21 13C19.8954 13 19 13.8954 19 15C19 16.1046 19.8954 17 21 17Z"
+                                stroke="white" stroke-width="1.5" />
+                            <path
+                                d="M12 22C13.1046 22 14 21.1046 14 20C14 18.8954 13.1046 18 12 18C10.8954 18 10 18.8954 10 20C10 21.1046 10.8954 22 12 22Z"
+                                stroke="white" stroke-width="1.5" />
+                            <path d="M5 7H19M19 15H21M3 7H1M12 20H10M12 20V18M12 18H14" stroke="white"
+                                stroke-width="1.5" />
+                            <path d="M19 13V7M5 7V15C5 16.1046 5.89543 17 7 17H19" stroke="white" stroke-width="1.5" />
                         </svg>
                     </div>
                     <div class="card-header-text">Advanced Technical Indicators</div>
                 </div>
-                
+
                 <div class="indicator-value">
-                    <span class="indicator-status neutral" style="font-size: 1.4rem; font-weight: var(--font-semibold); padding: 4px 12px; background-color: rgba(0, 200, 5, 0.1); color: var(--primary-color); border-radius: 20px;">At Middle Band</span>
+                    <span class="indicator-status neutral"
+                        style="font-size: 1.4rem; font-weight: var(--font-semibold); padding: 4px 12px; background-color: rgba(0, 200, 5, 0.1); color: var(--primary-color); border-radius: 20px;">At
+                        Middle Band</span>
                 </div>
                 <div class="indicator-label">Bollinger Bands (20-day, 2σ)</div>
-                
+
                 <div class="bollinger-container" style="margin: var(--spacing-md) 0;">
-                    <div class="bollinger-bands" style="position: relative; height: 120px; background-color: var(--card-highlight); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); margin-bottom: var(--spacing-md); overflow: hidden;">
+                    <div class="bollinger-bands"
+                        style="position: relative; height: 120px; background-color: var(--card-highlight); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); margin-bottom: var(--spacing-md); overflow: hidden;">
                         <!-- Gradient Background -->
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%); z-index: 1;"></div>
-                        
+                        <div
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%); z-index: 1;">
+                        </div>
+
                         <!-- Bollinger Upper Band -->
                         <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
-                            <path d="M0,20 C50,15 100,12 150,10 C200,8 250,10 300,12" 
-                                  stroke="var(--text-lighter)" 
-                                  stroke-width="1.5" 
-                                  fill="none" />
+                            <path d="M0,20 C50,15 100,12 150,10 C200,8 250,10 300,12" stroke="var(--text-lighter)"
+                                stroke-width="1.5" fill="none" />
                         </svg>
-                        
+
                         <!-- Bollinger Middle Band (SMA) -->
                         <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 3;">
-                            <path d="M0,50 C50,48 100,45 150,48 C200,51 250,53 300,50" 
-                                  stroke="var(--primary-color)" 
-                                  stroke-width="2" 
-                                  fill="none" />
+                            <path d="M0,50 C50,48 100,45 150,48 C200,51 250,53 300,50" stroke="var(--primary-color)"
+                                stroke-width="2" fill="none" />
                         </svg>
-                        
+
                         <!-- Bollinger Lower Band -->
                         <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
-                            <path d="M0,80 C50,78 100,75 150,78 C200,81 250,83 300,80" 
-                                  stroke="var(--text-lighter)" 
-                                  stroke-width="1.5" 
-                                  fill="none" />
+                            <path d="M0,80 C50,78 100,75 150,78 C200,81 250,83 300,80" stroke="var(--text-lighter)"
+                                stroke-width="1.5" fill="none" />
                         </svg>
-                        
+
                         <!-- Price Line -->
                         <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 5;">
-                            <path d="M0,85 C30,82 60,75 90,60 C120,45 150,30 180,25 C210,20 240,30 270,45 C285,53 300,50" 
-                                  stroke="var(--primary-color)" 
-                                  stroke-width="2.5" 
-                                  fill="none" />
+                            <path
+                                d="M0,85 C30,82 60,75 90,60 C120,45 150,30 180,25 C210,20 240,30 270,45 C285,53 300,50"
+                                stroke="var(--primary-color)" stroke-width="2.5" fill="none" />
                             <!-- Current Price Marker -->
                             <circle cx="300" cy="50" r="5" fill="var(--primary-color)" />
                         </svg>
-                        
+
                         <!-- Bands Fill -->
-                        <div style="position: absolute; top: 10px; left: 0; width: 100%; height: 70px; background-color: rgba(0, 200, 5, 0.05); z-index: 1; border-radius: 4px;"></div>
-                        
+                        <div
+                            style="position: absolute; top: 10px; left: 0; width: 100%; height: 70px; background-color: rgba(0, 200, 5, 0.05); z-index: 1; border-radius: 4px;">
+                        </div>
+
                         <!-- Labels -->
-                        <div style="position: absolute; top: 10px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">Upper Band ($49.27)</div>
-                        <div style="position: absolute; top: 48px; left: 8px; font-size: 0.7rem; color: var(--primary-color); font-weight: var(--font-medium); z-index: 6;">Middle Band ($41.54)</div>
-                        <div style="position: absolute; top: 78px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">Lower Band ($33.82)</div>
-                        <div style="position: absolute; bottom: 5px; right: 12px; font-size: 0.8rem; color: var(--primary-color); font-weight: var(--font-semibold); z-index: 6;">$40.51</div>
+                        <div
+                            style="position: absolute; top: 10px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">
+                            Upper Band ($49.27)</div>
+                        <div
+                            style="position: absolute; top: 48px; left: 8px; font-size: 0.7rem; color: var(--primary-color); font-weight: var(--font-medium); z-index: 6;">
+                            Middle Band ($41.54)</div>
+                        <div
+                            style="position: absolute; top: 78px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">
+                            Lower Band ($33.82)</div>
+                        <div
+                            style="position: absolute; bottom: 5px; right: 12px; font-size: 0.8rem; color: var(--primary-color); font-weight: var(--font-semibold); z-index: 6;">
+                            $40.51</div>
                     </div>
-                    
+
                     <!-- Bollinger Values -->
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm);">
-                        <div style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Upper</span>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span
+                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Upper</span>
                             <span style="font-size: 1rem; font-weight: var(--font-medium);">$49.27</span>
                         </div>
-                        <div style="display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 200, 5, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Middle</span>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 200, 5, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span
+                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Middle</span>
                             <span style="font-size: 1rem; font-weight: var(--font-medium);">$41.54</span>
                         </div>
-                        <div style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Lower</span>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span
+                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Lower</span>
                             <span style="font-size: 1rem; font-weight: var(--font-medium);">$33.82</span>
                         </div>
-                        <div style="display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 200, 5, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Current</span>
-                            <span style="font-size: 1rem; font-weight: var(--font-semibold); color: var(--primary-color);">$40.51</span>
+                        <div
+                            style="display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 200, 5, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
+                            <span
+                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Current</span>
+                            <span
+                                style="font-size: 1rem; font-weight: var(--font-semibold); color: var(--primary-color);">$40.51</span>
                         </div>
                     </div>
                 </div>
-                
-                <p>The current price ($40.51) is close to the middle Bollinger Band ($41.54), suggesting neutral volatility despite today's 4.79% decline. Recent trading activity shows abnormally high volume (64.06M shares), indicating significant market interest and potential price discovery.</p>
-                <p>MACD at -1.99 with a signal line at -1.95 (histogram -0.04) shows a slight bearish crossover, suggesting short-term momentum may be negative despite the longer-term uptrend.</p>
+
+                <p>The current price ($40.51) is close to the middle Bollinger Band ($41.54), suggesting neutral
+                    volatility despite today's 4.79% decline. Recent trading activity shows abnormally high volume
+                    (64.06M shares), indicating significant market interest and potential price discovery.</p>
+                <p>MACD at -1.99 with a signal line at -1.95 (histogram -0.04) shows a slight bearish crossover,
+                    suggesting short-term momentum may be negative despite the longer-term uptrend.</p>
             </div>
         </div>
-        
+
         <h2>SWOT Analysis</h2>
         <div class="swot-grid">
             <div class="card swot-card strengths">
                 <div class="swot-header">
                     <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="#00C805"/>
+                        <path
+                            d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"
+                            fill="#00C805" />
                     </svg>
                     <span>Strengths</span>
                 </div>
@@ -999,11 +1073,13 @@
                     <li><strong>Significant market share</strong> in the retail trading space</li>
                 </ul>
             </div>
-            
+
             <div class="card swot-card weaknesses">
                 <div class="swot-header">
                     <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 16.75H8C7.59 16.75 7.25 16.41 7.25 16C7.25 15.59 7.59 15.25 8 15.25H16C16.41 15.25 16.75 15.59 16.75 16C16.75 16.41 16.41 16.75 16 16.75Z" fill="#FF5000"/>
+                        <path
+                            d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 16.75H8C7.59 16.75 7.25 16.41 7.25 16C7.25 15.59 7.59 15.25 8 15.25H16C16.41 15.25 16.75 15.59 16.75 16C16.75 16.41 16.41 16.75 16 16.75Z"
+                            fill="#FF5000" />
                     </svg>
                     <span>Weaknesses</span>
                 </div>
@@ -1015,13 +1091,17 @@
                     <li><strong>Recent stock volatility</strong> with significant price swings</li>
                 </ul>
             </div>
-            
+
             <div class="card swot-card opportunities">
                 <div class="swot-header">
                     <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8 12H16" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 16V8" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#2979FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8 12H16" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 16V8" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                     <span>Opportunities</span>
                 </div>
@@ -1033,13 +1113,17 @@
                     <li><strong>International expansion</strong> beyond US markets</li>
                 </ul>
             </div>
-            
+
             <div class="card swot-card threats">
                 <div class="swot-header">
                     <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 8V13" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M11.9941 16H12.0031" stroke="#FFA500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#FFA500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 8V13" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M11.9941 16H12.0031" stroke="#FFA500" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                     <span>Threats</span>
                 </div>
@@ -1052,18 +1136,20 @@
                 </ul>
             </div>
         </div>
-        
+
         <h2>Investment Recommendation</h2>
         <div class="card">
             <div class="card-header">
                 <div class="card-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9V15M9 15V20.4C9 20.7314 9.26863 21 9.6 21H14.4C14.7314 21 15 20.7314 15 20.4V15M18 9V15M3 9H21M3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9V15V20.4C21 20.7314 20.7314 21 20.4 21H9.6M3 15V20.4C3 20.7314 3.26863 21 3.6 21H9.6M12 9V15M9 6V3.6C9 3.26863 9.26863 3 9.6 3M15 6V3.6C15 3.26863 14.7314 3 14.4 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        <path
+                            d="M6 9V15M9 15V20.4C9 20.7314 9.26863 21 9.6 21H14.4C14.7314 21 15 20.7314 15 20.4V15M18 9V15M3 9H21M3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9V15V20.4C21 20.7314 20.7314 21 20.4 21H9.6M3 15V20.4C3 20.7314 3.26863 21 3.6 21H9.6M12 9V15M9 6V3.6C9 3.26863 9.26863 3 9.6 3M15 6V3.6C15 3.26863 14.7314 3 14.4 3"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
                     </svg>
                 </div>
                 <div class="card-header-text">Analyst Recommendation</div>
             </div>
-            
+
             <div class="recommendation-section">
                 <div>
                     <div class="recommendation-badge">HOLD</div>
@@ -1076,120 +1162,167 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="recommendation-points">
-                    <p>Based on the comprehensive analysis of Robinhood Markets (HOOD), a "Hold" recommendation is most appropriate at this time. This balanced stance acknowledges both the company's impressive growth trajectory and the significant risks that could impact its future performance.</p>
-                    
+                    <p>Based on the comprehensive analysis of Robinhood Markets (HOOD), a "Hold" recommendation is most
+                        appropriate at this time. This balanced stance acknowledges both the company's impressive growth
+                        trajectory and the significant risks that could impact its future performance.</p>
+
                     <div class="reasons-card">
                         <div class="reasons-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#00C805" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                                    stroke="#00C805" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
                             </svg>
                             Positive Factors
                         </div>
                         <ul class="reasons-list">
                             <li>Four consecutive quarters of GAAP profitability</li>
                             <li>Strong Q4 2024 results with revenue growth of 115% year-over-year</li>
-                            <li>Continued product innovation and expansion into banking, wealth management, and prediction markets</li>
+                            <li>Continued product innovation and expansion into banking, wealth management, and
+                                prediction markets</li>
                             <li>Resolution of regulatory concerns with $45 million SEC settlement</li>
                             <li>Growing user base of 24.8 million funded customers</li>
                         </ul>
                     </div>
-                    
+
                     <div class="reasons-card">
                         <div class="reasons-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 12V17C22 20 20 22 17 22H7C4 22 2 20 2 17V12C2 9.3 3.3 7.8 5.5 7.3C5.8 7.2 6.1 7.1 6.4 7.1C6.9 7.0 7.5 7 8 7H16C16.5 7 17 7 17.5 7.1C17.9 7.1 18.2 7.2 18.4 7.3C20.7 7.8 22 9.3 22 12Z" stroke="#FF5000" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 7H8C7.5 7 6.9 7 6.4 7.1C5.5 2.7 7.6 2 12 2C16.4 2 18.5 3 17.5 7.1C17.1 7 16.5 7 16 7Z" stroke="#FF5000" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M22 12V17C22 20 20 22 17 22H7C4 22 2 20 2 17V12C2 9.3 3.3 7.8 5.5 7.3C5.8 7.2 6.1 7.1 6.4 7.1C6.9 7.0 7.5 7 8 7H16C16.5 7 17 7 17.5 7.1C17.9 7.1 18.2 7.2 18.4 7.3C20.7 7.8 22 9.3 22 12Z"
+                                    stroke="#FF5000" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 7H8C7.5 7 6.9 7 6.4 7.1C5.5 2.7 7.6 2 12 2C16.4 2 18.5 3 17.5 7.1C17.1 7 16.5 7 16 7Z"
+                                    stroke="#FF5000" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round" />
                             </svg>
                             Risk Factors
                         </div>
                         <ul class="reasons-list">
                             <li>Mixed technical signals – trading below 50-day SMA but above 200-day SMA</li>
-                            <li>Stock has surged 192.5% in 2024, pushing valuations to approximately twice their long-term average</li>
-                            <li>Significant dependence on cryptocurrency trading revenue, which is inherently volatile</li>
-                            <li>Morgan Stanley's recent downgrade citing concerns about tariff-related market turmoil</li>
-                            <li>Challenges in expanding into banking and wealth management against established players</li>
+                            <li>Stock has surged 192.5% in 2024, pushing valuations to approximately twice their
+                                long-term average</li>
+                            <li>Significant dependence on cryptocurrency trading revenue, which is inherently volatile
+                            </li>
+                            <li>Morgan Stanley's recent downgrade citing concerns about tariff-related market turmoil
+                            </li>
+                            <li>Challenges in expanding into banking and wealth management against established players
+                            </li>
                         </ul>
                     </div>
-                    
+
                     <div class="reasons-card">
                         <div class="reasons-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 8V13" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M11.9941 16H12.0031" stroke="#FFA500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                    stroke="#FFA500" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 8V13" stroke="#FFA500" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M11.9941 16H12.0031" stroke="#FFA500" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
                             </svg>
                             Recommendation Rationale
                         </div>
                         <ul class="reasons-list">
                             <li>Current price represents fair value given both growth potential and risks</li>
                             <li>Recent pullback (-4.79% today) follows significant volatility in early April</li>
-                            <li>Current price of $40.51 near the middle Bollinger Band of $41.54 suggests equilibrium</li>
+                            <li>Current price of $40.51 near the middle Bollinger Band of $41.54 suggests equilibrium
+                            </li>
                             <li>Watch for clearer technical signals before adjusting positions</li>
                             <li>Monitor cryptocurrency market trends as a leading indicator for stock performance</li>
                         </ul>
                     </div>
-                    
-                    <p>Given these mixed signals—strong growth and expanding business lines balanced against valuation concerns, crypto dependency, and potential macroeconomic headwinds—maintaining current positions while watching for either a more attractive entry point or clearer signals of sustainable growth is the most prudent approach.</p>
-                    
-                    <p>Investors already holding HOOD should maintain their positions, while those looking to initiate new positions should consider waiting for a more favorable risk-reward setup. The stock's high volatility suggests opportunities for better entry points may arise in the coming months.</p>
+
+                    <p>Given these mixed signals—strong growth and expanding business lines balanced against valuation
+                        concerns, crypto dependency, and potential macroeconomic headwinds—maintaining current positions
+                        while watching for either a more attractive entry point or clearer signals of sustainable growth
+                        is the most prudent approach.</p>
+
+                    <p>Investors already holding HOOD should maintain their positions, while those looking to initiate
+                        new positions should consider waiting for a more favorable risk-reward setup. The stock's high
+                        volatility suggests opportunities for better entry points may arise in the coming months.</p>
                 </div>
             </div>
         </div>
-        
+
         <h2>Risk Assessment</h2>
         <div class="grid grid-3">
             <div class="card risk-card">
                 <div class="risk-header">
                     <div class="risk-title">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#FF5000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" stroke="#FF5000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18.5 5.5V5.5" stroke="#FF5000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                                stroke="#FF5000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"
+                                stroke="#FF5000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18.5 5.5V5.5" stroke="#FF5000" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                         Cryptocurrency Exposure
                     </div>
                     <div class="risk-level risk-high">High</div>
                 </div>
-                <p>Robinhood's significant revenue from cryptocurrency trading (reported 700% rise in crypto revenue) creates vulnerability to crypto market volatility. Any significant downturn in cryptocurrency markets could dramatically impact the company's financial performance.</p>
+                <p>Robinhood's significant revenue from cryptocurrency trading (reported 700% rise in crypto revenue)
+                    creates vulnerability to crypto market volatility. Any significant downturn in cryptocurrency
+                    markets could dramatically impact the company's financial performance.</p>
             </div>
-            
+
             <div class="card risk-card">
                 <div class="risk-header">
                     <div class="risk-title">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 11V17C22 21 21 22 17 22H7C3 22 2 21 2 17V7C2 3 3 2 7 2H8.5C10 2 10.33 2.44 10.9 3.2L12.4 5.2C12.78 5.7 13 6 14 6H17C21 6 22 7 22 11Z" stroke="#FFA500" stroke-width="1.5" stroke-miterlimit="10"/>
+                            <path
+                                d="M22 11V17C22 21 21 22 17 22H7C3 22 2 21 2 17V7C2 3 3 2 7 2H8.5C10 2 10.33 2.44 10.9 3.2L12.4 5.2C12.78 5.7 13 6 14 6H17C21 6 22 7 22 11Z"
+                                stroke="#FFA500" stroke-width="1.5" stroke-miterlimit="10" />
                         </svg>
                         Valuation Risk
                     </div>
                     <div class="risk-level risk-medium">Medium</div>
                 </div>
-                <p>After surging 192.5% in 2024, Robinhood's stock is trading at approximately twice its long-term average valuation. This elevated valuation creates a higher bar for future performance and increases downside risk if growth slows or market conditions deteriorate.</p>
+                <p>After surging 192.5% in 2024, Robinhood's stock is trading at approximately twice its long-term
+                    average valuation. This elevated valuation creates a higher bar for future performance and increases
+                    downside risk if growth slows or market conditions deteriorate.</p>
             </div>
-            
+
             <div class="card risk-card">
                 <div class="risk-header">
                     <div class="risk-title">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 8.5C22 12.09 19.09 15 15.5 15C15.33 15 15.15 14.99 14.98 14.98C14.73 11.81 12.19 9.26 9.01998 9.02C9.00998 8.85 8.99999 8.67 8.99999 8.5C8.99999 4.91 11.91 2 15.5 2C19.09 2 22 4.91 22 8.5Z" stroke="#00C805" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M15 22C11.69 22 9 19.31 9 16C9 12.69 11.69 10 15 10C18.31 10 21 12.69 21 16C21 19.31 18.31 22 15 22Z" stroke="#00C805" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M22 8.5C22 12.09 19.09 15 15.5 15C15.33 15 15.15 14.99 14.98 14.98C14.73 11.81 12.19 9.26 9.01998 9.02C9.00998 8.85 8.99999 8.67 8.99999 8.5C8.99999 4.91 11.91 2 15.5 2C19.09 2 22 4.91 22 8.5Z"
+                                stroke="#00C805" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M15 22C11.69 22 9 19.31 9 16C9 12.69 11.69 10 15 10C18.31 10 21 12.69 21 16C21 19.31 18.31 22 15 22Z"
+                                stroke="#00C805" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         Competitive Landscape
                     </div>
                     <div class="risk-level risk-medium">Medium</div>
                 </div>
-                <p>Robinhood faces significant challenges as it expands into banking and wealth management services where established players like JPMorgan Chase and Bank of America have stronger brand trust and deeper resources. Building trust in these new verticals represents a substantial hurdle.</p>
+                <p>Robinhood faces significant challenges as it expands into banking and wealth management services
+                    where established players like JPMorgan Chase and Bank of America have stronger brand trust and
+                    deeper resources. Building trust in these new verticals represents a substantial hurdle.</p>
             </div>
             <div class="footer">
                 <div class="footer-left">
-                    Analysis Date: April 6, 2025 | Data Sourced from: OptiTrade-AI
+                    Analysis Date: April 10, 2025 | Data Sourced from: OptiTrade-AI
                 </div>
                 <div class="footer-right">
                     <img class="footer-logo" src="/stock-analysis/hood-icon.png" alt="HOOD Logo">
                     Robinhood Markets, Inc. (NYSE: HOOD)
                 </div>
             </div>
-        </div>
-    </body>
+    </div>
+</body>
+
 </html>
