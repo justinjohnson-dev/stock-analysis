@@ -1,1285 +1,1839 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SoFi Technologies, Inc. (SOFI) Analysis Dashboard</title>
     <style>
-        :root {
-            --primary-color: #2F5EAA;
-            /* SoFi blue */
-            --primary-dark: #1E4A8C;
-            --primary-light: #4B78C2;
-            --secondary-color: #222222;
-            --accent-color: #303030;
-            --buy-color: #00C805;
-            --sell-color: #FF5000;
-            --hold-color: #F5A623;
-            --oversold-color: #2979FF;
-            --text-color: #303030;
-            --text-light: #505050;
-            --text-lighter: #707070;
-            --border-color: #e8e8e8;
-            --background-color: #f8f8f8;
-            --card-background: #ffffff;
-            --card-highlight: #fafafa;
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --border-radius-sm: 6px;
-            --border-radius: 12px;
-            --border-radius-lg: 16px;
-            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            --card-shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.1);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-light: 300;
-            --font-regular: 400;
-            --font-medium: 500;
-            --font-semibold: 600;
-            --font-bold: 700;
-        }
+      :root {
+        --primary-color: #2f5eaa;
+        /* SoFi blue */
+        --primary-dark: #1e4a8c;
+        --primary-light: #4b78c2;
+        --secondary-color: #222222;
+        --accent-color: #303030;
+        --buy-color: #00c805;
+        --sell-color: #ff5000;
+        --hold-color: #f5a623;
+        --oversold-color: #2979ff;
+        --text-color: #303030;
+        --text-light: #505050;
+        --text-lighter: #707070;
+        --border-color: #e8e8e8;
+        --background-color: #f8f8f8;
+        --card-background: #ffffff;
+        --card-highlight: #fafafa;
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --border-radius-sm: 6px;
+        --border-radius: 12px;
+        --border-radius-lg: 16px;
+        --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        --card-shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.1);
+        --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        --font-light: 300;
+        --font-regular: 400;
+        --font-medium: 500;
+        --font-semibold: 600;
+        --font-bold: 700;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            padding: var(--spacing-md);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        padding: var(--spacing-md);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: var(--secondary-color);
-            margin-bottom: var(--spacing-md);
-            font-weight: var(--font-semibold);
-            line-height: 1.3;
-        }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--secondary-color);
+        margin-bottom: var(--spacing-md);
+        font-weight: var(--font-semibold);
+        line-height: 1.3;
+      }
 
-        h1 {
-            font-size: 2.2rem;
-            color: var(--secondary-color);
-            margin-bottom: var(--spacing-sm);
-            display: inline-block;
-            letter-spacing: -0.5px;
-        }
+      h1 {
+        font-size: 2.2rem;
+        color: var(--secondary-color);
+        margin-bottom: var(--spacing-sm);
+        display: inline-block;
+        letter-spacing: -0.5px;
+      }
 
-        h2 {
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-md);
-            position: relative;
-            padding-left: var(--spacing-md);
-            letter-spacing: -0.5px;
-        }
+      h2 {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-top: var(--spacing-xl);
+        margin-bottom: var(--spacing-md);
+        position: relative;
+        padding-left: var(--spacing-md);
+        letter-spacing: -0.5px;
+      }
 
-        h2::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background-color: var(--primary-color);
-            border-radius: 2px;
-        }
+      h2::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+      }
 
-        h3 {
-            font-size: 1.2rem;
-            margin-top: var(--spacing-lg);
-            color: var(--secondary-color);
-            letter-spacing: -0.3px;
-        }
+      h3 {
+        font-size: 1.2rem;
+        margin-top: var(--spacing-lg);
+        color: var(--secondary-color);
+        letter-spacing: -0.3px;
+      }
 
-        p {
-            margin-bottom: var(--spacing-md);
-            color: var(--text-color);
-        }
+      p {
+        margin-bottom: var(--spacing-md);
+        color: var(--text-color);
+      }
 
-        ul,
-        ol {
-            margin-bottom: var(--spacing-md);
-            padding-left: var(--spacing-lg);
-        }
+      ul,
+      ol {
+        margin-bottom: var(--spacing-md);
+        padding-left: var(--spacing-lg);
+      }
 
-        li {
-            margin-bottom: var(--spacing-sm);
-        }
+      li {
+        margin-bottom: var(--spacing-sm);
+      }
 
-        strong {
-            font-weight: var(--font-semibold);
-            color: var(--accent-color);
-        }
+      strong {
+        font-weight: var(--font-semibold);
+        color: var(--accent-color);
+      }
 
-        .card {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
+      .card {
+        background-color: var(--card-background);
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--border-color);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
 
-        .card:hover {
-            box-shadow: var(--card-shadow-hover);
-            transform: translateY(-3px);
-        }
+      .card:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-3px);
+      }
 
-        .card::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, transparent 50%, rgba(47, 94, 170, 0.1) 50%);
-            border-radius: 0 var(--border-radius-sm) 0 0;
-            z-index: 1;
-        }
+      .card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          transparent 50%,
+          rgba(47, 94, 170, 0.1) 50%
+        );
+        border-radius: 0 var(--border-radius-sm) 0 0;
+        z-index: 1;
+      }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: var(--spacing-lg);
-        }
+      .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+      }
 
-        .card-header-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            margin-right: var(--spacing-sm);
-        }
+      .card-header-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        margin-right: var(--spacing-sm);
+      }
 
-        .card-header-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
+      .card-header-icon svg {
+        width: 18px;
+        height: 18px;
+        fill: white;
+      }
 
-        .card-header-text {
-            font-weight: var(--font-semibold);
-            font-size: 1.25rem;
-            color: var(--secondary-color);
-        }
+      .card-header-text {
+        font-weight: var(--font-semibold);
+        font-size: 1.25rem;
+        color: var(--secondary-color);
+      }
 
-        .grid {
-            display: grid;
-            gap: var(--spacing-lg);
-        }
+      .grid {
+        display: grid;
+        gap: var(--spacing-lg);
+      }
 
-        .grid-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-        .grid-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-        .grid-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
-        .section {
-            margin-bottom: var(--spacing-xl);
-        }
+      .section {
+        margin-bottom: var(--spacing-xl);
+      }
 
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-md);
-            border-bottom: 2px solid var(--primary-color);
-        }
+      .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 2px solid var(--primary-color);
+      }
 
-        .company-logo {
-            display: flex;
-            align-items: center;
-        }
+      .company-logo {
+        display: flex;
+        align-items: center;
+      }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            margin-right: var(--spacing-md);
-        }
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-right: var(--spacing-md);
+      }
 
-        .company-info {
-            display: flex;
-            flex-direction: column;
-        }
+      .company-info {
+        display: flex;
+        flex-direction: column;
+      }
 
-        .company-ticker {
-            font-size: 1rem;
-            font-weight: var(--font-medium);
-            color: var(--primary-color);
-        }
+      .company-ticker {
+        font-size: 1rem;
+        font-weight: var(--font-medium);
+        color: var(--primary-color);
+      }
 
-        .date-display {
-            display: flex;
-            align-items: center;
-            font-size: 0.9rem;
-            font-weight: var(--font-medium);
-            color: var(--text-lighter);
-            background-color: var(--card-background);
-            padding: var(--spacing-xs) var(--spacing-md);
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-        }
+      .date-display {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        font-weight: var(--font-medium);
+        color: var(--text-lighter);
+        background-color: var(--card-background);
+        padding: var(--spacing-xs) var(--spacing-md);
+        border-radius: 20px;
+        box-shadow: var(--card-shadow);
+      }
 
-        .date-display svg {
-            margin-right: var(--spacing-xs);
+      .date-display svg {
+        margin-right: var(--spacing-xs);
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+      }
+
+      .metric-card {
+        background-color: var(--card-highlight);
+        border-radius: var(--border-radius-sm);
+        padding: var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+      }
+
+      .metric-card:hover {
+        background-color: var(--card-background);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .metric-label {
+        font-size: 0.85rem;
+        font-weight: var(--font-medium);
+        color: var(--text-lighter);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .metric-value {
+        font-size: 1.1rem;
+        font-weight: var(--font-semibold);
+        color: var(--secondary-color);
+      }
+
+      .metric-trend {
+        font-size: 0.8rem;
+        margin-top: var(--spacing-xs);
+      }
+
+      .trend-up {
+        color: var(--buy-color);
+      }
+
+      .trend-down {
+        color: var(--sell-color);
+      }
+
+      .indicator-value {
+        font-size: 1.8rem;
+        font-weight: var(--font-bold);
+        margin-bottom: var(--spacing-sm);
+        color: var(--secondary-color);
+        display: flex;
+        align-items: baseline;
+      }
+
+      .indicator-value-unit {
+        font-size: 1rem;
+        font-weight: var(--font-regular);
+        color: var(--text-lighter);
+        margin-left: var(--spacing-xs);
+      }
+
+      .indicator-label {
+        font-size: 0.9rem;
+        color: var(--text-lighter);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .rsi-container {
+        margin: var(--spacing-md) 0;
+      }
+
+      .rsi-bar-container {
+        position: relative;
+        width: 100%;
+        height: 24px;
+        background-color: #eeeeee;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .rsi-zone-oversold {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 30%;
+        background-color: var(--sell-color);
+        opacity: 0.2;
+        z-index: 1;
+      }
+
+      .rsi-zone-overbought {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 30%;
+        background-color: var(--sell-color);
+        opacity: 0.2;
+        z-index: 1;
+      }
+
+      .rsi-marker {
+        position: absolute;
+        width: 4px;
+        height: 32px;
+        background-color: var(--secondary-color);
+        top: -4px;
+        left: 45.61%;
+        z-index: 3;
+      }
+
+      .rsi-marker-dot {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: var(--secondary-color);
+        border-radius: 50%;
+        bottom: -4px;
+        left: 45.61%;
+        transform: translateX(-4px);
+        z-index: 4;
+      }
+
+      .rsi-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: var(--text-lighter);
+      }
+
+      .rsi-label-highlight {
+        color: var(--sell-color);
+        font-weight: var(--font-medium);
+      }
+
+      .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        overflow: hidden;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: var(--spacing-sm) var(--spacing-md);
+        text-align: left;
+      }
+
+      .data-table th {
+        font-weight: var(--font-medium);
+        color: var(--text-lighter);
+        background-color: var(--card-highlight);
+        font-size: 0.85rem;
+      }
+
+      .data-table tr:nth-child(even) {
+        background-color: var(--card-highlight);
+      }
+
+      .data-table td {
+        border-top: 1px solid var(--border-color);
+      }
+
+      .trend-value {
+        display: flex;
+        align-items: center;
+      }
+
+      .trend-value svg {
+        margin-right: var(--spacing-xs);
+        flex-shrink: 0;
+      }
+
+      .down-value {
+        color: var(--sell-color);
+        font-weight: var(--font-semibold);
+      }
+
+      .up-value {
+        color: var(--buy-color);
+        font-weight: var(--font-semibold);
+      }
+
+      .swot-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: var(--spacing-md);
+      }
+
+      .swot-card {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        padding-top: var(--spacing-xl);
+      }
+
+      .swot-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+      }
+
+      .swot-card.strengths::before {
+        background-color: var(--buy-color);
+      }
+
+      .swot-card.weaknesses::before {
+        background-color: var(--sell-color);
+      }
+
+      .swot-card.opportunities::before {
+        background-color: var(--oversold-color);
+      }
+
+      .swot-card.threats::before {
+        background-color: var(--hold-color);
+      }
+
+      .swot-header {
+        font-weight: var(--font-semibold);
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-md);
+        color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .swot-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: var(--spacing-sm);
+      }
+
+      .swot-list {
+        padding-left: 1.5rem;
+      }
+
+      .swot-list li {
+        margin-bottom: 10px;
+        position: relative;
+      }
+
+      .swot-list li strong {
+        color: var(--accent-color);
+      }
+
+      .recommendation-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 28px;
+        background-color: var(--buy-color);
+        color: #333;
+        border-radius: 24px;
+        font-weight: var(--font-semibold);
+        font-size: 1.1rem;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .recommendation-badge::before {
+        content: "↑";
+        margin-right: var(--spacing-sm);
+        font-weight: bold;
+      }
+
+      .recommendation-section {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: var(--spacing-lg);
+        align-items: start;
+      }
+
+      .recommendation-points {
+        margin-top: var(--spacing-md);
+      }
+
+      .reasons-card {
+        box-shadow: none;
+        border: 1px solid var(--border-color);
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+        background-color: var(--card-highlight);
+      }
+
+      .reasons-title {
+        font-size: 1rem;
+        font-weight: var(--font-medium);
+        color: var(--secondary-color);
+        margin-bottom: var(--spacing-sm);
+        display: flex;
+        align-items: center;
+      }
+
+      .reasons-title svg {
+        margin-right: var(--spacing-xs);
+      }
+
+      .reasons-list {
+        padding-left: 1.2rem;
+        margin-bottom: 0;
+      }
+
+      .reasons-list li {
+        margin-bottom: var(--spacing-xs);
+        font-size: 0.95rem;
+      }
+
+      .risk-card {
+        height: 100%;
+        transition: var(--transition);
+        padding: var(--spacing-md);
+      }
+
+      .risk-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .risk-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .risk-title {
+        font-weight: var(--font-semibold);
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .risk-title svg {
+        margin-right: var(--spacing-xs);
+      }
+
+      .risk-level {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: var(--font-medium);
+      }
+
+      .risk-low {
+        background-color: rgba(0, 200, 5, 0.1);
+        color: #00813c;
+      }
+
+      .risk-medium {
+        background-color: rgba(245, 166, 35, 0.1);
+        color: #b17800;
+      }
+
+      .risk-high {
+        background-color: rgba(255, 80, 0, 0.1);
+        color: #c62100;
+      }
+
+      .footer {
+        margin-top: var(--spacing-xl);
+        padding-top: var(--spacing-md);
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        color: var(--text-lighter);
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-left {
+        font-size: 0.85rem;
+      }
+
+      .footer-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .footer-logo {
+        width: 18px;
+        height: 18px;
+        margin-right: var(--spacing-xs);
+      }
+
+      .bollinger-container {
+        margin: var(--spacing-md) 0;
+      }
+
+      .bollinger-bands {
+        position: relative;
+        height: 120px;
+        background-color: var(--card-highlight);
+        border-radius: var(--border-radius-sm);
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+        overflow: hidden;
+      }
+
+      .content-section {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .content-section h3 {
+        font-size: 1.1rem;
+        margin-top: 0;
+        margin-bottom: var(--spacing-sm);
+        color: var(--secondary-color);
+        font-weight: var(--font-semibold);
+      }
+
+      .source-citation {
+        display: flex;
+        align-items: center;
+        margin-top: var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        background-color: rgba(47, 94, 170, 0.05);
+        border-left: 3px solid var(--primary-color);
+        border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+      }
+
+      .source-icon {
+        color: var(--primary-color);
+        margin-right: var(--spacing-xs);
+        flex-shrink: 0;
+      }
+
+      .source-text {
+        font-size: 0.85rem;
+        color: var(--text-lighter);
+        font-style: italic;
+      }
+
+      @media (max-width: 1000px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .swot-grid,
+        .recommendation-section {
+          grid-template-columns: 1fr;
         }
 
         .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--spacing-md);
+          grid-template-columns: 1fr;
         }
 
-        .metric-card {
-            background-color: var(--card-highlight);
-            border-radius: var(--border-radius-sm);
-            padding: var(--spacing-md);
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
+        h1 {
+          font-size: 1.8rem;
         }
 
-        .metric-card:hover {
-            background-color: var(--card-background);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        h2 {
+          font-size: 1.4rem;
         }
 
-        .metric-label {
-            font-size: 0.85rem;
-            font-weight: var(--font-medium);
-            color: var(--text-lighter);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .metric-value {
-            font-size: 1.1rem;
-            font-weight: var(--font-semibold);
-            color: var(--secondary-color);
-        }
-
-        .metric-trend {
-            font-size: 0.8rem;
-            margin-top: var(--spacing-xs);
-        }
-
-        .trend-up {
-            color: var(--buy-color);
-        }
-
-        .trend-down {
-            color: var(--sell-color);
-        }
-
-        .indicator-value {
-            font-size: 1.8rem;
-            font-weight: var(--font-bold);
-            margin-bottom: var(--spacing-sm);
-            color: var(--secondary-color);
-            display: flex;
-            align-items: baseline;
-        }
-
-        .indicator-value-unit {
-            font-size: 1rem;
-            font-weight: var(--font-regular);
-            color: var(--text-lighter);
-            margin-left: var(--spacing-xs);
-        }
-
-        .indicator-label {
-            font-size: 0.9rem;
-            color: var(--text-lighter);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .rsi-container {
-            margin: var(--spacing-md) 0;
-        }
-
-        .rsi-bar-container {
-            position: relative;
-            width: 100%;
-            height: 24px;
-            background-color: #EEEEEE;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .rsi-zone-oversold {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 30%;
-            background-color: var(--sell-color);
-            opacity: 0.2;
-            z-index: 1;
-        }
-
-        .rsi-zone-overbought {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 30%;
-            background-color: var(--sell-color);
-            opacity: 0.2;
-            z-index: 1;
-        }
-
-        .rsi-marker {
-            position: absolute;
-            width: 4px;
-            height: 32px;
-            background-color: var(--secondary-color);
-            top: -4px;
-            left: 45.61%;
-            z-index: 3;
-        }
-
-        .rsi-marker-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: var(--secondary-color);
-            border-radius: 50%;
-            bottom: -4px;
-            left: 45.61%;
-            transform: translateX(-4px);
-            z-index: 4;
-        }
-
-        .rsi-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-lighter);
-        }
-
-        .rsi-label-highlight {
-            color: var(--sell-color);
-            font-weight: var(--font-medium);
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: var(--spacing-md);
-            border-radius: var(--border-radius-sm);
-            overflow: hidden;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: var(--spacing-sm) var(--spacing-md);
-            text-align: left;
-        }
-
-        .data-table th {
-            font-weight: var(--font-medium);
-            color: var(--text-lighter);
-            background-color: var(--card-highlight);
-            font-size: 0.85rem;
-        }
-
-        .data-table tr:nth-child(even) {
-            background-color: var(--card-highlight);
-        }
-
-        .data-table td {
-            border-top: 1px solid var(--border-color);
-        }
-
-        .trend-value {
-            display: flex;
-            align-items: center;
-        }
-
-        .trend-value svg {
-            margin-right: var(--spacing-xs);
-            flex-shrink: 0;
-        }
-
-        .down-value {
-            color: var(--sell-color);
-            font-weight: var(--font-semibold);
-        }
-
-        .up-value {
-            color: var(--buy-color);
-            font-weight: var(--font-semibold);
-        }
-
-        .swot-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, auto);
-            gap: var(--spacing-md);
-        }
-
-        .swot-card {
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            padding-top: var(--spacing-xl);
-        }
-
-        .swot-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
-        }
-
-        .swot-card.strengths::before {
-            background-color: var(--buy-color);
-        }
-
-        .swot-card.weaknesses::before {
-            background-color: var(--sell-color);
-        }
-
-        .swot-card.opportunities::before {
-            background-color: var(--oversold-color);
-        }
-
-        .swot-card.threats::before {
-            background-color: var(--hold-color);
-        }
-
-        .swot-header {
-            font-weight: var(--font-semibold);
-            font-size: 1.2rem;
-            margin-bottom: var(--spacing-md);
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .swot-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: var(--spacing-sm);
-        }
-
-        .swot-list {
-            padding-left: 1.5rem;
-        }
-
-        .swot-list li {
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .swot-list li strong {
-            color: var(--accent-color);
+        h3 {
+          font-size: 1.2rem;
         }
 
         .recommendation-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 28px;
-            background-color: var(--buy-color);
-            color: #333;
-            border-radius: 24px;
-            font-weight: var(--font-semibold);
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-md);
+          margin: 0 auto var(--spacing-md);
+          display: flex;
         }
-
-        .recommendation-badge::before {
-            content: "↑";
-            margin-right: var(--spacing-sm);
-            font-weight: bold;
-        }
-
-        .recommendation-section {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: var(--spacing-lg);
-            align-items: start;
-        }
-
-        .recommendation-points {
-            margin-top: var(--spacing-md);
-        }
-
-        .reasons-card {
-            box-shadow: none;
-            border: 1px solid var(--border-color);
-            padding: var(--spacing-md);
-            margin-top: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-            background-color: var(--card-highlight);
-        }
-
-        .reasons-title {
-            font-size: 1rem;
-            font-weight: var(--font-medium);
-            color: var(--secondary-color);
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-        }
-
-        .reasons-title svg {
-            margin-right: var(--spacing-xs);
-        }
-
-        .reasons-list {
-            padding-left: 1.2rem;
-            margin-bottom: 0;
-        }
-
-        .reasons-list li {
-            margin-bottom: var(--spacing-xs);
-            font-size: 0.95rem;
-        }
-
-        .risk-card {
-            height: 100%;
-            transition: var(--transition);
-            padding: var(--spacing-md);
-        }
-
-        .risk-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .risk-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .risk-title {
-            font-weight: var(--font-semibold);
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .risk-title svg {
-            margin-right: var(--spacing-xs);
-        }
-
-        .risk-level {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: var(--font-medium);
-        }
-
-        .risk-low {
-            background-color: rgba(0, 200, 5, 0.1);
-            color: #00813C;
-        }
-
-        .risk-medium {
-            background-color: rgba(245, 166, 35, 0.1);
-            color: #B17800;
-        }
-
-        .risk-high {
-            background-color: rgba(255, 80, 0, 0.1);
-            color: #C62100;
-        }
-
-        .footer {
-            margin-top: var(--spacing-xl);
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--text-lighter);
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-left {
-            font-size: 0.85rem;
-        }
-
-        .footer-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-logo {
-            width: 18px;
-            height: 18px;
-            margin-right: var(--spacing-xs);
-        }
-
-        .bollinger-container {
-            margin: var(--spacing-md) 0;
-        }
-
-        .bollinger-bands {
-            position: relative;
-            height: 120px;
-            background-color: var(--card-highlight);
-            border-radius: var(--border-radius-sm);
-            padding: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-            overflow: hidden;
-        }
-
-        .content-section {
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .content-section h3 {
-            font-size: 1.1rem;
-            margin-top: 0;
-            margin-bottom: var(--spacing-sm);
-            color: var(--secondary-color);
-            font-weight: var(--font-semibold);
-        }
-
-        .source-citation {
-            display: flex;
-            align-items: center;
-            margin-top: var(--spacing-xs);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background-color: rgba(47, 94, 170, 0.05);
-            border-left: 3px solid var(--primary-color);
-            border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
-        }
-
-        .source-icon {
-            color: var(--primary-color);
-            margin-right: var(--spacing-xs);
-            flex-shrink: 0;
-        }
-
-        .source-text {
-            font-size: 0.85rem;
-            color: var(--text-lighter);
-            font-style: italic;
-        }
-
-        @media (max-width: 1000px) {
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-
-            .grid-2,
-            .grid-3,
-            .grid-4,
-            .swot-grid,
-            .recommendation-section {
-                grid-template-columns: 1fr;
-            }
-
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            h2 {
-                font-size: 1.4rem;
-            }
-
-            h3 {
-                font-size: 1.2rem;
-            }
-
-            .recommendation-badge {
-                margin: 0 auto var(--spacing-md);
-                display: flex;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="header-section">
-            <div class="company-logo">
-                <img class="logo" src="/stock-analysis/sofi-icon.png" alt="SOFI Logo">
-                <div class="company-info">
-                    <div class="company-ticker">NASDAQ: SOFI</div>
-                    <h1>SoFi Technologies Analysis</h1>
-                </div>
+      <div class="header-section">
+        <div class="company-logo">
+          <img
+            class="logo"
+            src="/stock-analysis/sofi-icon.png"
+            alt="SOFI Logo"
+          />
+          <div class="company-info">
+            <div class="company-ticker">NASDAQ: SOFI</div>
+            <h1>SoFi Technologies Analysis</h1>
+          </div>
+        </div>
+        <div class="date-display">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+              stroke="#606060"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 13C11.45 13 11 13.45 11 14C11 14.55 11.45 15 12 15C12.55 15 13 14.55 13 14C13 13.45 12.55 13 12 13Z"
+              fill="#606060"
+            />
+          </svg>
+          April 17, 2025
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 10.5H14V14.5H10V10.5ZM10 5.5H14V9.5H10V5.5ZM5 15.5H9V19.5H5V15.5ZM5 10.5H9V14.5H5V10.5ZM5 5.5H9V9.5H5V5.5ZM15 15.5H19V19.5H15V15.5ZM15 10.5H19V14.5H15V10.5ZM15 5.5H19V9.5H15V5.5Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+          <div class="card-header-text">Key Metrics Dashboard</div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Current Price</div>
+            <div class="metric-value">$10.98</div>
+            <div class="metric-trend trend-up">+3.75% (1d)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Trading Range</div>
+            <div class="metric-value">$8.95 - $13.92</div>
+            <div class="metric-trend">Bollinger Bands</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Trading Volume</div>
+            <div class="metric-value">46.86M</div>
+            <div class="metric-trend">High activity</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Market Cap</div>
+            <div class="metric-value">$11.95B</div>
+            <div class="metric-trend">As of Apr 2025</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">RSI (14-day)</div>
+            <div class="metric-value">45.61</div>
+            <div class="metric-trend">Neutral</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">YTD Performance</div>
+            <div class="metric-value">-31%</div>
+            <div class="metric-trend">Since Jan 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Market Position</h2>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 6.5H16M6 6.5H2M2 12H8M16 12H22M12 17.5H22M12 17.5C12 19.1569 10.6569 20.5 9 20.5C7.34315 20.5 6 19.1569 6 17.5C6 15.8431 7.34315 14.5 9 14.5C10.6569 14.5 12 15.8431 12 17.5ZM6 6.5C6 8.15685 7.34315 9.5 9 9.5C10.6569 9.5 12 8.15685 12 6.5C12 4.84315 10.6569 3.5 9 3.5C7.34315 3.5 6 4.84315 6 6.5ZM18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9C16.6569 9 18 10.3431 18 12Z"
+                stroke="white"
+                stroke-width="1.5"
+              />
+            </svg>
+          </div>
+          <div class="card-header-text">Industry Leadership</div>
+        </div>
+        <p>
+          SoFi Technologies, Inc. operates as a leading digital financial
+          services platform, transitioning from its origins in student loan
+          refinancing to a full-service digital bank offering
+          <strong>personal loans, investing, and banking services</strong>. The
+          company has positioned itself as a disruptive force in the fintech
+          industry, targeting younger, tech-savvy consumers.
+        </p>
+        <p>
+          In 2024, SoFi achieved
+          <strong>its first full-year positive net income</strong> and reported
+          consistent quarterly profits, marking a significant milestone. The
+          company has tripled its customer base to over
+          <strong>10 million members</strong> in three years, driven by its
+          innovative platform and diversified product offerings.
+        </p>
+        <p>
+          A key growth driver is SoFi’s <strong>Galileo platform</strong>,
+          described as the “AWS of fintech,” which provides technological
+          infrastructure for other fintech companies. Additionally, a
+          <strong>$5 billion loan platform business agreement</strong> with Blue
+          Owl Capital (April 2025) enhances its lending capabilities,
+          positioning SoFi for further growth despite recent market challenges.
+        </p>
+      </div>
+
+      <h2>Technical Analysis</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M7.33008 14.49L9.71008 11.4C10.0501 10.96 10.6801 10.88 11.1201 11.22L12.9501 12.66C13.3901 13 14.0201 12.92 14.3601 12.49L16.6701 9.51001"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
-            <div class="date-display">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="card-header-text">RSI & Moving Averages</div>
+          </div>
+          <div class="indicator-value">
+            45.61<span class="indicator-value-unit">RSI</span>
+          </div>
+          <div class="indicator-label">Relative Strength Index (14-day)</div>
+          <div class="rsi-container">
+            <div class="rsi-bar-container">
+              <div class="rsi-zone-oversold"></div>
+              <div class="rsi-zone-overbought"></div>
+              <div class="rsi-marker"></div>
+              <div class="rsi-marker-dot"></div>
+            </div>
+            <div class="rsi-labels">
+              <span>0</span>
+              <span class="rsi-label-highlight">Oversold (30)</span>
+              <span>Neutral</span>
+              <span class="rsi-label-highlight">Overbought (70)</span>
+              <span>100</span>
+            </div>
+          </div>
+          <p>
+            RSI at 45.61 indicates neutral territory, with some bearish
+            sentiment but not strongly oversold.
+          </p>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Moving Average</th>
+                <th>Value</th>
+                <th>Deviation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>50-Day SMA</td>
+                <td>$12.83</td>
+                <td class="trend-value down-value">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
-                        d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
-                        stroke="#606060" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      d="M12 20V4M12 20L5 13M12 20L19 13"
+                      stroke="#FF5000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  -14.4%
+                </td>
+              </tr>
+              <tr>
+                <td>200-Day SMA</td>
+                <td>$11.51</td>
+                <td class="trend-value down-value">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
-                        d="M12 13C11.45 13 11 13.45 11 14C11 14.55 11.45 15 12 15C12.55 15 13 14.55 13 14C13 13.45 12.55 13 12 13Z"
-                        fill="#606060" />
+                      d="M12 20V4M12 20L5 13M12 20L19 13"
+                      stroke="#FF5000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  -4.6%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 2V19C2 20.66 3.34 22 5 22H22"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M5 17L9.59 11.64C10.35 10.76 11.7 10.7 12.52 11.53L13.47 12.48C14.29 13.3 15.64 13.25 16.4 12.37L21 7"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="card-header-text">Bollinger Bands</div>
+          </div>
+
+          <div class="indicator-value">
+            <span
+              class="indicator-status neutral"
+              style="
+                font-size: 1.4rem;
+                font-weight: var(--font-semibold);
+                padding: 4px 12px;
+                background-color: rgba(47, 94, 170, 0.1);
+                color: var(--primary-color);
+                border-radius: 20px;
+              "
+              >Mid-Upper Band</span
+            >
+          </div>
+          <div class="indicator-label">Bollinger Bands (20-day, 2σ)</div>
+
+          <div class="bollinger-container">
+            <div
+              class="bollinger-bands"
+              style="
+                position: relative;
+                height: 100px;
+                background-color: var(--card-background);
+                border-radius: var(--border-radius-sm);
+                padding: var(--spacing-sm);
+                margin-bottom: var(--spacing-md);
+                border: 1px solid var(--border-color);
+              "
+            >
+              <!-- Upper Band -->
+              <svg
+                width="100%"
+                height="100%"
+                style="position: absolute; top: 0; left: 0; z-index: 2"
+              >
+                <line
+                  x1="0"
+                  y1="20"
+                  x2="100%"
+                  y2="20"
+                  stroke="#606060"
+                  stroke-width="1.5"
+                />
+                <text
+                  x="8"
+                  y="15"
+                  font-size="0.7rem"
+                  fill="var(--text-lighter)"
+                >
+                  Upper Band ($13.92)
+                </text>
+              </svg>
+
+              <!-- Middle Band (SMA) -->
+              <svg
+                width="100%"
+                height="100%"
+                style="position: absolute; top: 0; left: 0; z-index: 3"
+              >
+                <line
+                  x1="0"
+                  y1="50"
+                  x2="100%"
+                  y2="50"
+                  stroke="var(--primary-color)"
+                  stroke-width="2"
+                />
+                <text
+                  x="8"
+                  y="45"
+                  font-size="0.7rem"
+                  fill="var(--primary-color)"
+                  font-weight="var(--font-medium)"
+                >
+                  SMA ($11.43)
+                </text>
+              </svg>
+
+              <!-- Lower Band -->
+              <svg
+                width="100%"
+                height="100%"
+                style="position: absolute; top: 0; left: 0; z-index: 2"
+              >
+                <line
+                  x1="0"
+                  y1="80"
+                  x2="100%"
+                  y2="80"
+                  stroke="#606060"
+                  stroke-width="1.5"
+                />
+                <text
+                  x="8"
+                  y="75"
+                  font-size="0.7rem"
+                  fill="var(--text-lighter)"
+                >
+                  Lower Band ($8.95)
+                </text>
+              </svg>
+
+              <!-- Current Price Marker -->
+              <svg
+                width="100%"
+                height="100%"
+                style="position: absolute; top: 0; left: 0; z-index: 5"
+              >
+                <circle cx="95%" cy="60" r="5" fill="var(--primary-color)" />
+                <text
+                  x="85%"
+                  y="65"
+                  font-size="0.8.rem"
+                  fill="var(--primary-color)"
+                  font-weight="var(--font-semibold)"
+                >
+                  $10.98
+                </text>
+              </svg>
+            </div>
+
+            <!-- Bollinger Values -->
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--spacing-sm);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background-color: var(--card-highlight);
+                  padding: var(--spacing-sm);
+                  border-radius: var(--border-radius-sm);
+                "
+              >
+                <span
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--text-lighter);
+                    margin-bottom: 2px;
+                  "
+                  >Upper</span
+                >
+                <span style="font-size: 1rem; font-weight: var(--font-medium)"
+                  >$13.92</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background-color: var(--card-highlight);
+                  padding: var(--spacing-sm);
+                  border-radius: var(--border-radius-sm);
+                "
+              >
+                <span
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--text-lighter);
+                    margin-bottom: 2px;
+                  "
+                  >Middle</span
+                >
+                <span style="font-size: 1rem; font-weight: var(--font-medium)"
+                  >$11.43</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background-color: var(--card-highlight);
+                  padding: var(--spacing-sm);
+                  border-radius: var(--border-radius-sm);
+                "
+              >
+                <span
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--text-lighter);
+                    margin-bottom: 2px;
+                  "
+                  >Lower</span
+                >
+                <span style="font-size: 1rem; font-weight: var(--font-medium)"
+                  >$8.95</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background-color: rgba(47, 94, 170, 0.1);
+                  padding: var(--spacing-sm);
+                  border-radius: var(--border-radius-sm);
+                "
+              >
+                <span
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--text-lighter);
+                    margin-bottom: 2px;
+                  "
+                  >Current</span
+                >
+                <span
+                  style="
+                    font-size: 1rem;
+                    font-weight: var(--font-semibold);
+                    color: var(--primary-color);
+                  "
+                  >$10.98</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Price ($10.98) is in the mid-upper section of the Bollinger Bands,
+            indicating neutral positioning.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.75 12L10.58 14.83L16.25 9.17"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="card-header-text">SoFi Fundamentals & Key News</div>
+        </div>
+
+        <div class="content-section">
+          <h3>Loan Platform Expansion</h3>
+          <p>
+            SoFi secured a
+            <strong>$5 billion loan platform business agreement</strong> with
+            Blue Owl Capital in April 2025, significantly enhancing its lending
+            capabilities and positioning it for future growth.
+          </p>
+          <div class="source-citation">
+            <svg
+              class="source-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="source-text">Company Announcement, April 2025</span>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h3>Profitability Milestone</h3>
+          <p>
+            SoFi reported its
+            <strong>first full-year positive net income</strong> in 2024, with
+            consistent quarterly profits, marking a significant shift from prior
+            years of investment-focused losses.
+          </p>
+          <div class="source-citation">
+            <svg
+              class="source-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="source-text">2024 Annual Report</span>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h3>Customer Growth</h3>
+          <p>
+            The company has <strong>tripled its customer base</strong> to over
+            10 million members in three years, driven by its user-friendly
+            platform and diversified financial products.
+          </p>
+          <div class="source-citation">
+            <svg
+              class="source-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="source-text">Company Reports, 2025</span>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h3>Recent Events</h3>
+          <ul style="list-style-type: none; padding-left: 0">
+            <li
+              style="
+                display: flex;
+                margin-bottom: var(--spacing-sm);
+                align-items: baseline;
+              "
+            >
+              <span
+                style="
+                  color: var(--primary-color);
+                  margin-right: var(--spacing-sm);
+                  font-size: 1.2rem;
+                "
+                >•</span
+              >
+              <span
+                ><strong>April 2025:</strong> Secured $5 billion loan platform
+                agreement with Blue Owl Capital</span
+              >
+            </li>
+            <li
+              style="
+                display: flex;
+                margin-bottom: var(--spacing-sm);
+                align-items: baseline;
+              "
+            >
+              <span
+                style="
+                  color: var(--primary-color);
+                  margin-right: var(--spacing-sm);
+                  font-size: 1.2rem;
+                "
+                >•</span
+              >
+              <span
+                ><strong>2024:</strong> Achieved first full-year positive net
+                income</span
+              >
+            </li>
+            <li
+              style="
+                display: flex;
+                margin-bottom: var(--spacing-sm);
+                align-items: baseline;
+              "
+            >
+              <span
+                style="
+                  color: var(--sell-color);
+                  margin-right: var(--spacing-sm);
+                  font-size: 1.2rem;
+                "
+                >•</span
+              >
+              <span
+                ><strong>Jan-Apr 2025:</strong> 31% stock price decline amid
+                market volatility</span
+              >
+            </li>
+            <li
+              style="
+                display: flex;
+                margin-bottom: var(--spacing-sm);
+                align-items: baseline;
+              "
+            >
+              <span
+                style="
+                  color: var(--primary-color);
+                  margin-right: var(--spacing-sm);
+                  font-size: 1.2rem;
+                "
+                >•</span
+              >
+              <span
+                ><strong>Recent Weeks:</strong> Outperformed financial peers
+                with 11.3% weekly gain</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>SWOT Analysis</h2>
+      <div class="swot-grid">
+        <div class="card swot-card strengths">
+          <div class="swot-header">
+            <svg
+              class="swot-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="#00C805"
+                stroke-width="1.5"
+              />
+              <path
+                d="M8 12L11 15L16 10"
+                stroke="#00C805"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Strengths
+          </div>
+          <ul class="swot-list">
+            <li>
+              <strong>Customer Growth:</strong> Tripled customer base to over 10
+              million
+            </li>
+            <li>
+              <strong>Profitability:</strong> Achieved first full-year positive
+              net income in 2024
+            </li>
+            <li>
+              <strong>Galileo Platform:</strong> Leading fintech infrastructure
+              provider
+            </li>
+            <li>
+              <strong>Loan Agreement:</strong> $5 billion deal with Blue Owl
+              Capital
+            </li>
+            <li>
+              <strong>Product Diversification:</strong> Full-service digital
+              bank offerings
+            </li>
+          </ul>
+        </div>
+
+        <div class="card swot-card weaknesses">
+          <div class="swot-header">
+            <svg
+              class="swot-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="#FF5000"
+                stroke-width="1.5"
+              />
+              <path
+                d="M15 9L9 15M9 9L15 15"
+                stroke="#FF5000"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Weaknesses
+          </div>
+          <ul class="swot-list">
+            <li>
+              <strong>Economic Sensitivity:</strong> Exposure to personal loan
+              performance risks
+            </li>
+            <li>
+              <strong>Stock Volatility:</strong> 31% decline since January 2025
+            </li>
+            <li>
+              <strong>Short-Term Bearishness:</strong> Trading below 50-day SMA
+            </li>
+          </ul>
+        </div>
+
+        <div class="card swot-card opportunities">
+          <div class="swot-header">
+            <svg
+              class="swot-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="#2979FF"
+                stroke-width="1.5"
+              />
+              <path
+                d="M12 8V16M8 12H16"
+                stroke="#2979FF"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Opportunities
+          </div>
+          <ul class="swot-list">
+            <li>
+              <strong>Lending Growth:</strong> Expansion through $5 billion loan
+              platform
+            </li>
+            <li>
+              <strong>Fintech Innovation:</strong> Further development of
+              Galileo platform
+            </li>
+            <li>
+              <strong>Market Recovery:</strong> Potential rebound in financial
+              sector
+            </li>
+            <li>
+              <strong>Young Demographics:</strong> Targeting growing retail
+              investor base
+            </li>
+          </ul>
+        </div>
+
+        <div class="card swot-card threats">
+          <div class="swot-header">
+            <svg
+              class="swot-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="#F5A623"
+                stroke-width="1.5"
+              />
+              <path
+                d="M12 8V13M12 16V16.5"
+                stroke="#F5A623"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Threats
+          </div>
+          <ul class="swot-list">
+            <li>
+              <strong>Economic Downturn:</strong> Risks to loan performance in
+              recession
+            </li>
+            <li>
+              <strong>Policy Uncertainty:</strong> Impact of new economic
+              policies
+            </li>
+            <li>
+              <strong>Market Volatility:</strong> Broader market instability
+              risks
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Investment Recommendation</h2>
+      <div class="card">
+        <div class="recommendation-section">
+          <div>
+            <div class="recommendation-badge">Buy</div>
+            <div class="recommendation-points">
+              <p>
+                SOFI appears technically oversold with improving technical
+                signals and strong fundamental developments, suggesting a
+                potential reversal.
+              </p>
+            </div>
+          </div>
+          <div>
+            <div class="reasons-card">
+              <div class="reasons-title">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"
+                    fill="#00C805"
+                  />
+                  <path
+                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                    stroke="#00C805"
+                    stroke-width="1.5"
+                  />
                 </svg>
-                April 17, 2025
+                Buy Rationale
+              </div>
+              <ul class="reasons-list">
+                <li>
+                  MACD bullish crossover indicates potential momentum shift
+                </li>
+                <li>Elevated volume on up days suggests accumulation</li>
+                <li>$5 billion loan agreement enhances lending capabilities</li>
+                <li>
+                  First full-year profitability in 2024 strengthens fundamentals
+                </li>
+                <li>Reasonable valuation after 31% YTD decline</li>
+              </ul>
             </div>
+
+            <div class="reasons-card">
+              <div class="reasons-title">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                    stroke="#303030"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M12 16V12M12 8H12.01"
+                    stroke="#303030"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Options Strategy
+              </div>
+              <ul class="reasons-list">
+                <li>
+                  <strong>Long Call:</strong> Buy SOFI June 21, 2025 $11 Calls
+                  for leveraged upside
+                </li>
+                <li>
+                  <strong>Bull Call Spread:</strong> Buy $11 Calls, sell $13
+                  Calls to reduce cost
+                </li>
+                <li>
+                  <strong>Entry Points:</strong> Enter at $10.98 or $10.50
+                  support
+                </li>
+                <li>
+                  <strong>Profit Targets:</strong> 50% at $12.83, remaining at
+                  $13.92
+                </li>
+                <li>
+                  <strong>Stop Loss:</strong> Exit below $9.95 on high volume
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Risk Assessment</h2>
+      <div class="grid grid-3">
+        <div class="card risk-card">
+          <div class="risk-header">
+            <div class="risk-title">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 9V14M12 17.5V18"
+                  stroke="#F5A623"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="#F5A623"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Economic Downturn
+            </div>
+            <div class="risk-level risk-medium">Medium</div>
+          </div>
+          <p>
+            Exposure to personal loan performance risks could impact SOFI’s
+            lending business if economic conditions deteriorate, particularly in
+            a recession.
+          </p>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <div class="card-header-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10 10.5H14V14.5H10V10.5ZM10 5.5H14V9.5H10V5.5ZM5 15.5H9V19.5H5V15.5ZM5 10.5H9V14.5H5V10.5ZM5 5.5H9V9.5H5V5.5ZM15 15.5H19V19.5H15V15.5ZM15 10.5H19V14.5H15V10.5ZM15 5.5H19V9.5H15V5.5Z"
-                            fill="white" />
-                    </svg>
-                </div>
-                <div class="card-header-text">Key Metrics Dashboard</div>
+        <div class="card risk-card">
+          <div class="risk-header">
+            <div class="risk-title">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 9V14M12 17.5V18"
+                  stroke="#F5A623"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="#F5A623"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Market Volatility
             </div>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-label">Current Price</div>
-                    <div class="metric-value">$10.98</div>
-                    <div class="metric-trend trend-up">+3.75% (1d)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Trading Range</div>
-                    <div class="metric-value">$8.95 - $13.92</div>
-                    <div class="metric-trend">Bollinger Bands</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Trading Volume</div>
-                    <div class="metric-value">46.86M</div>
-                    <div class="metric-trend">High activity</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Market Cap</div>
-                    <div class="metric-value">$11.95B</div>
-                    <div class="metric-trend">As of Apr 2025</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">RSI (14-day)</div>
-                    <div class="metric-value">45.61</div>
-                    <div class="metric-trend">Neutral</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">YTD Performance</div>
-                    <div class="metric-value">-31%</div>
-                    <div class="metric-trend">Since Jan 2025</div>
-                </div>
-            </div>
+            <div class="risk-level risk-medium">Medium</div>
+          </div>
+          <p>
+            Uncertainty regarding new economic policies and tariffs could lead
+            to broader market volatility, affecting SOFI’s stock price.
+          </p>
         </div>
 
-        <h2>Market Position</h2>
-        <div class="card">
-            <div class="card-header">
-                <div class="card-header-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M22 6.5H16M6 6.5H2M2 12H8M16 12H22M12 17.5H22M12 17.5C12 19.1569 10.6569 20.5 9 20.5C7.34315 20.5 6 19.1569 6 17.5C6 15.8431 7.34315 14.5 9 14.5C10.6569 14.5 12 15.8431 12 17.5ZM6 6.5C6 8.15685 7.34315 9.5 9 9.5C10.6569 9.5 12 8.15685 12 6.5C12 4.84315 10.6569 3.5 9 3.5C7.34315 3.5 6 4.84315 6 6.5ZM18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9C16.6569 9 18 10.3431 18 12Z"
-                            stroke="white" stroke-width="1.5" />
-                    </svg>
-                </div>
-                <div class="card-header-text">Industry Leadership</div>
+        <div class="card risk-card">
+          <div class="risk-header">
+            <div class="risk-title">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 9V14M12 17.5V18"
+                  stroke="#FF5000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="#FF5000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Earnings Volatility
             </div>
-            <p>SoFi Technologies, Inc. operates as a leading digital financial services platform, transitioning from its origins in student loan refinancing to a full-service digital bank offering <strong>personal loans, investing, and banking services</strong>. The company has positioned itself as a disruptive force in the fintech industry, targeting younger, tech-savvy consumers.</p>
-            <p>In 2024, SoFi achieved <strong>its first full-year positive net income</strong> and reported consistent quarterly profits, marking a significant milestone. The company has tripled its customer base to over <strong>10 million members</strong> in three years, driven by its innovative platform and diversified product offerings.</p>
-            <p>A key growth driver is SoFi’s <strong>Galileo platform</strong>, described as the “AWS of fintech,” which provides technological infrastructure for other fintech companies. Additionally, a <strong>$5 billion loan platform business agreement</strong> with Blue Owl Capital (April 2025) enhances its lending capabilities, positioning SoFi for further growth despite recent market challenges.</p>
+            <div class="risk-level risk-high">High</div>
+          </div>
+          <p>
+            The upcoming earnings report on April 28, 2025, could introduce
+            significant volatility, presenting both a risk and a potential
+            catalyst.
+          </p>
         </div>
+      </div>
 
-        <h2>Technical Analysis</h2>
-        <div class="grid grid-2">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
-                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M7.33008 14.49L9.71008 11.4C10.0501 10.96 10.6801 10.88 11.1201 11.22L12.9501 12.66C13.3901 13 14.0201 12.92 14.3601 12.49L16.6701 9.51001"
-                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div class="card-header-text">RSI & Moving Averages</div>
-                </div>
-                <div class="indicator-value">
-                    45.61<span class="indicator-value-unit">RSI</span>
-                </div>
-                <div class="indicator-label">Relative Strength Index (14-day)</div>
-                <div class="rsi-container">
-                    <div class="rsi-bar-container">
-                        <div class="rsi-zone-oversold"></div>
-                        <div class="rsi-zone-overbought"></div>
-                        <div class="rsi-marker"></div>
-                        <div class="rsi-marker-dot"></div>
-                    </div>
-                    <div class="rsi-labels">
-                        <span>0</span>
-                        <span class="rsi-label-highlight">Oversold (30)</span>
-                        <span>Neutral</span>
-                        <span class="rsi-label-highlight">Overbought (70)</span>
-                        <span>100</span>
-                    </div>
-                </div>
-                <p>RSI at 45.61 indicates neutral territory, with some bearish sentiment but not strongly oversold.</p>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Moving Average</th>
-                            <th>Value</th>
-                            <th>Deviation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>50-Day SMA</td>
-                            <td>$12.83</td>
-                            <td class="trend-value down-value">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 20V4M12 20L5 13M12 20L19 13" stroke="#FF5000" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                -14.4%
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>200-Day SMA</td>
-                            <td>$11.51</td>
-                            <td class="trend-value down-value">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 20V4M12 20L5 13M12 20L19 13" stroke="#FF5000" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                -4.6%
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 2V19C2 20.66 3.34 22 5 22H22" stroke="white" stroke-width="1.5"
-                                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M5 17L9.59 11.64C10.35 10.76 11.7 10.7 12.52 11.53L13.47 12.48C14.29 13.3 15.64 13.25 16.4 12.37L21 7"
-                                stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div class="card-header-text">Bollinger Bands</div>
-                </div>
-
-                <div class="indicator-value">
-                    <span class="indicator-status neutral"
-                        style="font-size: 1.4rem; font-weight: var(--font-semibold); padding: 4px 12px; background-color: rgba(47, 94, 170, 0.1); color: var(--primary-color); border-radius: 20px;">Mid-Upper Band</span>
-                </div>
-                <div class="indicator-label">Bollinger Bands (20-day, 2σ)</div>
-
-                <div class="bollinger-container">
-                    <div class="bollinger-bands">
-                        <div
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%); z-index: 1;">
-                        </div>
-
-                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
-                            <path d="M0,20 C50,15 100,12 150,10 C200,8 250,10 300,12" stroke="var(--text-lighter)"
-                                stroke-width="1.5" fill="none" />
-                        </svg>
-
-                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 3;">
-                            <path d="M0,50 C50,48 100,45 150,48 C200,51 250,53 300,50" stroke="var(--primary-color)"
-                                stroke-width="2" fill="none" />
-                        </svg>
-
-                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 2;">
-                            <path d="M0,80 C50,78 100,75 150,78 C200,81 250,83 300,80" stroke="var(--text-lighter)"
-                                stroke-width="1.5" fill="none" />
-                        </svg>
-
-                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 5;">
-                            <path
-                                d="M0,65 C30,70 60,78 90,85 C120,92 150,95 180,90 C210,85 240,88 270,92 C285,94 300,95"
-                                stroke="var(--primary-color)" stroke-width="2.5" fill="none" />
-                            <circle cx="300" cy="94" r="5" fill="var(--primary-color)" />
-                        </svg>
-
-                        <div
-                            style="position: absolute; top: 10px; left: 0; width: 100%; height: 70px; background-color: rgba(47, 94, 170, 0.05); z-index: 1; border-radius: 4px;">
-                        </div>
-
-                        <div
-                            style="position: absolute; top: 10px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">
-                            Upper Band ($13.92)</div>
-                        <div
-                            style="position: absolute; top: 48px; left: 8px; font-size: 0.7rem; color: var(--primary-color); font-weight: var(--font-medium); z-index: 6;">
-                            SMA ($11.43)</div>
-                        <div
-                            style="position: absolute; top: 78px; left: 8px; font-size: 0.7rem; color: var(--text-lighter); z-index: 6;">
-                            Lower Band ($8.95)</div>
-                        <div
-                            style="position: absolute; bottom: 5px; right: 12px; font-size: 0.8rem; color: var(--primary-color); font-weight: var(--font-semibold); z-index: 6;">
-                            $10.98</div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm);">
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span
-                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Upper</span>
-                            <span style="font-size: 1rem; font-weight: var(--font-medium);">$13.92</span>
-                        </div>
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span
-                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Middle</span>
-                            <span style="font-size: 1rem; font-weight: var(--font-medium);">$11.43</span>
-                        </div>
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; background-color: var(--card-highlight); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span
-                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Lower</span>
-                            <span style="font-size: 1rem; font-weight: var(--font-medium);">$8.95</span>
-                        </div>
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; background-color: rgba(47, 94, 170, 0.1); padding: var(--spacing-sm); border-radius: var(--border-radius-sm);">
-                            <span
-                                style="font-size: 0.8rem; color: var(--text-lighter); margin-bottom: 2px;">Current</span>
-                            <span
-                                style="font-size: 1rem; font-weight: var(--font-semibold); color: var(--primary-color);">$10.98</span>
-                        </div>
-                    </div>
-                </div>
-
-                <p>Price ($10.98) is in the mid-upper section of the Bollinger Bands, indicating neutral positioning.</p>
-            </div>
+      <div class="footer">
+        <div class="footer-left">
+          Analysis Date: April 17, 2025 | Data Sourced from: OptiTrade-AI
         </div>
-
-        <div class="card">
-            <div class="card-header">
-                <div class="card-header-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M7.75 12L10.58 14.83L16.25 9.17" stroke="white" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <div class="card-header-text">SoFi Fundamentals & Key News</div>
-            </div>
-
-            <div class="content-section">
-                <h3>Loan Platform Expansion</h3>
-                <p>SoFi secured a <strong>$5 billion loan platform business agreement</strong> with Blue Owl Capital in April 2025, significantly enhancing its lending capabilities and positioning it for future growth.</p>
-                <div class="source-citation">
-                    <svg class="source-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span class="source-text">Company Announcement, April 2025</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3>Profitability Milestone</h3>
-                <p>SoFi reported its <strong>first full-year positive net income</strong> in 2024, with consistent quarterly profits, marking a significant shift from prior years of investment-focused losses.</p>
-                <div class="source-citation">
-                    <svg class="source-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span class="source-text">2024 Annual Report</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3>Customer Growth</h3>
-                <p>The company has <strong>tripled its customer base</strong> to over 10 million members in three years, driven by its user-friendly platform and diversified financial products.</p>
-                <div class="source-citation">
-                    <svg class="source-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 9.5V15.5M12 7.5V7.51M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span class="source-text">Company Reports, 2025</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3>Recent Events</h3>
-                <ul style="list-style-type: none; padding-left: 0;">
-                    <li style="display: flex; margin-bottom: var(--spacing-sm); align-items: baseline;">
-                        <span
-                            style="color: var(--primary-color); margin-right: var(--spacing-sm); font-size: 1.2rem;">•</span>
-                        <span><strong>April 2025:</strong> Secured $5 billion loan platform agreement with Blue Owl Capital</span>
-                    </li>
-                    <li style="display: flex; margin-bottom: var(--spacing-sm); align-items: baseline;">
-                        <span
-                            style="color: var(--primary-color); margin-right: var(--spacing-sm); font-size: 1.2rem;">•</span>
-                        <span><strong>2024:</strong> Achieved first full-year positive net income</span>
-                    </li>
-                    <li style="display: flex; margin-bottom: var(--spacing-sm); align-items: baseline;">
-                        <span
-                            style="color: var(--sell-color); margin-right: var(--spacing-sm); font-size: 1.2rem;">•</span>
-                        <span><strong>Jan-Apr 2025:</strong> 31% stock price decline amid market volatility</span>
-                    </li>
-                    <li style="display: flex; margin-bottom: var(--spacing-sm); align-items: baseline;">
-                        <span
-                            style="color: var(--primary-color); margin-right: var(--spacing-sm); font-size: 1.2rem;">•</span>
-                        <span><strong>Recent Weeks:</strong> Outperformed financial peers with 11.3% weekly gain</span>
-                    </li>
-                </ul>
-            </div>
+        <div class="footer-right">
+          <img
+            class="footer-logo"
+            src="/stock-analysis/sofi-icon.png"
+            alt="SOFI Logo"
+          />
+          SoFi Technologies, Inc. (NASDAQ: SOFI)
         </div>
-
-        <h2>SWOT Analysis</h2>
-        <div class="swot-grid">
-            <div class="card swot-card strengths">
-                <div class="swot-header">
-                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#00C805" stroke-width="1.5" />
-                        <path d="M8 12L11 15L16 10" stroke="#00C805" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Strengths
-                </div>
-                <ul class="swot-list">
-                    <li><strong>Customer Growth:</strong> Tripled customer base to over 10 million</li>
-                    <li><strong>Profitability:</strong> Achieved first full-year positive net income in 2024</li>
-                    <li><strong>Galileo Platform:</strong> Leading fintech infrastructure provider</li>
-                    <li><strong>Loan Agreement:</strong> $5 billion deal with Blue Owl Capital</li>
-                    <li><strong>Product Diversification:</strong> Full-service digital bank offerings</li>
-                </ul>
-            </div>
-
-            <div class="card swot-card weaknesses">
-                <div class="swot-header">
-                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#FF5000" stroke-width="1.5" />
-                        <path d="M15 9L9 15M9 9L15 15" stroke="#FF5000" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Weaknesses
-                </div>
-                <ul class="swot-list">
-                    <li><strong>Economic Sensitivity:</strong> Exposure to personal loan performance risks</li>
-                    <li><strong>Stock Volatility:</strong> 31% decline since January 2025</li>
-                    <li><strong>Short-Term Bearishness:</strong> Trading below 50-day SMA</li>
-                </ul>
-            </div>
-
-            <div class="card swot-card opportunities">
-                <div class="swot-header">
-                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#2979FF" stroke-width="1.5" />
-                        <path d="M12 8V16M8 12H16" stroke="#2979FF" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Opportunities
-                </div>
-                <ul class="swot-list">
-                    <li><strong>Lending Growth:</strong> Expansion through $5 billion loan platform</li>
-                    <li><strong>Fintech Innovation:</strong> Further development of Galileo platform</li>
-                    <li><strong>Market Recovery:</strong> Potential rebound in financial sector</li>
-                    <li><strong>Young Demographics:</strong> Targeting growing retail investor base</li>
-                </ul>
-            </div>
-
-            <div class="card swot-card threats">
-                <div class="swot-header">
-                    <svg class="swot-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#F5A623" stroke-width="1.5" />
-                        <path d="M12 8V13M12 16V16.5" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Threats
-                </div>
-                <ul class="swot-list">
-                    <li><strong>Economic Downturn:</strong> Risks to loan performance in recession</li>
-                    <li><strong>Policy Uncertainty:</strong> Impact of new economic policies</li>
-                    <li><strong>Market Volatility:</strong> Broader market instability risks</li>
-                </ul>
-            </div>
-        </div>
-
-        <h2>Investment Recommendation</h2>
-        <div class="card">
-            <div class="recommendation-section">
-                <div>
-                    <div class="recommendation-badge">
-                        Buy
-                    </div>
-                    <div class="recommendation-points">
-                        <p>SOFI appears technically oversold with improving technical signals and strong fundamental developments, suggesting a potential reversal.</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="reasons-card">
-                        <div class="reasons-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"
-                                    fill="#00C805" />
-                                <path
-                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                    stroke="#00C805" stroke-width="1.5" />
-                            </svg>
-                            Buy Rationale
-                        </div>
-                        <ul class="reasons-list">
-                            <li>MACD bullish crossover indicates potential momentum shift</li>
-                            <li>Elevated volume on up days suggests accumulation</li>
-                            <li>$5 billion loan agreement enhances lending capabilities</li>
-                            <li>First full-year profitability in 2024 strengthens fundamentals</li>
-                            <li>Reasonable valuation after 31% YTD decline</li>
-                        </ul>
-                    </div>
-
-                    <div class="reasons-card">
-                        <div class="reasons-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                    stroke="#303030" stroke-width="1.5" />
-                                <path d="M12 16V12M12 8H12.01" stroke="#303030" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Options Strategy
-                        </div>
-                        <ul class="reasons-list">
-                            <li><strong>Long Call:</strong> Buy SOFI June 21, 2025 $11 Calls for leveraged upside</li>
-                            <li><strong>Bull Call Spread:</strong> Buy $11 Calls, sell $13 Calls to reduce cost</li>
-                            <li><strong>Entry Points:</strong> Enter at $10.98 or $10.50 support</li>
-                            <li><strong>Profit Targets:</strong> 50% at $12.83, remaining at $13.92</li>
-                            <li><strong>Stop Loss:</strong> Exit below $9.95 on high volume</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2>Risk Assessment</h2>
-        <div class="grid grid-3">
-            <div class="card risk-card">
-                <div class="risk-header">
-                    <div class="risk-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 9V14M12 17.5V18" stroke="#F5A623" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        Economic Downturn
-                    </div>
-                    <div class="risk-level risk-medium">Medium</div>
-                </div>
-                <p>Exposure to personal loan performance risks could impact SOFI’s lending business if economic conditions deteriorate, particularly in a recession.</p>
-            </div>
-
-            <div class="card risk-card">
-                <div class="risk-header">
-                    <div class="risk-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 9V14M12 17.5V18" stroke="#F5A623" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        Market Volatility
-                    </div>
-                    <div class="risk-level risk-medium">Medium</div>
-                </div>
-                <p>Uncertainty regarding new economic policies and tariffs could lead to broader market volatility, affecting SOFI’s stock price.</p>
-            </div>
-
-            <div class="card risk-card">
-                <div class="risk-header">
-                    <div class="risk-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 9V14M12 17.5V18" stroke="#FF5000" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                stroke="#FF5000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        Earnings Volatility
-                    </div>
-                    <div class="risk-level risk-high">High</div>
-                </div>
-                <p>The upcoming earnings report on April 28, 2025, could introduce significant volatility, presenting both a risk and a potential catalyst.</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="footer-left">
-                Analysis Date: April 17, 2025 | Data Sourced from: OptiTrade-AI
-            </div>
-            <div class="footer-right">
-                <img class="footer-logo" src="/stock-analysis/sofi-icon.png" alt="SOFI Logo">
-                SoFi Technologies, Inc. (NASDAQ: SOFI)
-            </div>
-        </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
